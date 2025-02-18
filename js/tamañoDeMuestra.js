@@ -1,56 +1,67 @@
-tipoDeMuestra = document.getElementById("tipoDeMuestra");
-
-tipoDeMuestra.addEventListener("change",function(){
+document.getElementById("tipoDeMuestra").addEventListener("change", function(event) {
+  event.preventDefault(); // Evita recarga de la página
+  
   let opcion = this.value;
-  switch(opcion){
-    case "proSinPo": 
-    //cracion de campos necesarios
-      let inputNC = document.createElement("input");
+  let camposMuestra = document.getElementById("camposMuestra");
+  camposMuestra.innerHTML = ""; // Limpiar campos anteriores
 
-      inputNC.type = "text";
-      inputNC.id = "varNC"; // Asigna un ID único
-      inputNC.placeholder = "Nivel de cofianza";
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
-      document.getElementById("camposMuestra").appendChild(inputNC);
-      document.getElementById("camposMuestra").appendChild(document.createElement("br")); 
-      
-      let inputN = document.createElement("input");
-  
-      inputN.type = "text";
-      inputN.id = "varN"; // Asigna un ID único
-      inputN.placeholder = "tamaño de poblacion";
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
-      document.getElementById("camposMuestra").appendChild(inputN);
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
+  const crearInput = (id, placeholder) => {
+      let input = document.createElement("input");
+      input.type = "text";
+      input.id = id;
+      input.placeholder = placeholder;
+      return input;
+  };
 
-      let inputP = document.createElement("input");
-  
-      inputP.type = "text";
-      inputP.id = "varP"; // Asigna un ID único
-      inputP.placeholder = "probabilidad de exito";
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
-      document.getElementById("camposMuestra").appendChild(inputP);
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
+  const agregarElemento = (elemento) => {
+      camposMuestra.appendChild(document.createElement("br"));
+      camposMuestra.appendChild(elemento);
+  };
 
-      let inputd = document.createElement("input");
-  
-      inputD.type = "text";
-      inputD.id = "varN"; // Asigna un ID único
-      inputD.placeholder = "precision";
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
-      document.getElementById("camposMuestra").appendChild(inputD);
-      document.getElementById("camposMuestra").appendChild(document.createElement("br"));
-    
-    
-    break;
-    case "proConPo": 
-    
-    break;  
-    case "medSinPo": 
-    
-    break;  
-    case "medConPo": 
-    
-    break;
+  let inputsConfig = {
+      "proSinPo": ["varNC", "Nivel de confianza", "varP", "Probabilidad de éxito", "varD", "Precisión"],
+      "proConPo": ["varNC", "Nivel de confianza", "varN", "Tamaño de población", "varP", "Probabilidad de éxito", "varD", "Precisión"],
+      "medSinPo": ["varNC", "Nivel de confianza", "varN", "Tamaño de población", "varS", "Desviación estándar", "varD", "Precisión"],
+      "medConPo": ["varNC", "Nivel de confianza", "varN", "Tamaño de población", "varS", "Desviación estándar", "varD", "Precisión"]
+  };
+
+  if (inputsConfig[opcion]) {
+      for (let i = 0; i < inputsConfig[opcion].length; i += 2) {
+          agregarElemento(crearInput(inputsConfig[opcion][i], inputsConfig[opcion][i + 1]));
+      }
   }
+
+  document.getElementById("btnCalc").addEventListener("click", function(event) {
+      event.preventDefault(); // Evita recarga de la página
+      
+      let nc = document.getElementById("varNC")?.value || "";
+      let n = document.getElementById("varN")?.value || "";
+      let p = document.getElementById("varP")?.value || "";
+      let d = document.getElementById("varD")?.value || "";
+      let s = document.getElementById("varS")?.value || "";
+      
+      console.log("Valores obtenidos:", { nc, n, p, d, s, opcion });
+      
+      calcEstProConN(nc, n, p, d, s, opcion);
+  });
 });
+
+function calcEstProConN(nc, n, p, d, s, opcion) {
+  console.log("Ejecutando calcEstProConN con:", { nc, n, p, d, s, opcion });
+  
+  switch (opcion) {
+      case "proConPo":
+          let ns = 100 - nc;
+          let za = math.invNorm((nc + (ns / 2)));
+          let q = 100 - p;
+          let result = (n * za ** 2 * p * q) / (d ** 2 * (n - 1) + za ** 2 * p * q);
+          result = Math.ceil(result);
+          console.log("Resultado calculado:", result);
+          return [ns, za, q, s, result];
+      case "proSinPo":
+      case "medSinPo":
+      case "medConPo":
+          console.log("Caso aún no implementado");
+          break;
+  }
+}
