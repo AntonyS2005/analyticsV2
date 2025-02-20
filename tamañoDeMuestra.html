@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tamaño de muestra</title>
 </head>
 <body>
-  <form>
-    <p>que tipo de muestra necesita</p>
-    <select id="tipoDeMuestra">
-      <option value="">seleccione una opcion </option>
-      <option value="proSinPo">Proporcion sin poblacion</option>
-      <option value="proConPo">Proporcion con poblacion</option>
-      <option value="medSinPo">Medias sin poblacion</option>
-      <option value="medConPo">Medias con poblacion</option>
+  <form id="formMuestra">
+    <p>¿Qué tipo de muestra necesita?</p>
+    <select id="tipoDeMuestra" required>
+      <option value="">Seleccione una opción</option>
+      <option value="proSinPo">Proporción sin población</option>
+      <option value="proConPo">Proporción con población</option>
+      <option value="medSinPo">Medias sin población</option>
+      <option value="medConPo">Medias con población</option>
     </select>
-    <div id="camposMuestra">
-    </div>
-    <button id="btnCalc">calc</button>
+    <div id="camposMuestra"></div>
+    <br>
+    <button type="submit" id="btnCalc">Calcular</button>
+      <div id = "divRespuesta"></div>
   </form>
+
   <script src="/js/tamañoDeMuestra.js"></script>
 </body>
 </html>
