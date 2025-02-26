@@ -1,0 +1,23 @@
+{
+  "name": "analyticsv2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonyS2005/analyticsV2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonyS2005/analyticsV2/issues"
+  },
+  "homepage": "https://github.com/AntonyS2005/analyticsV2#readme",
+  "description": "",
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}
