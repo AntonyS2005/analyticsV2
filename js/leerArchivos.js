@@ -1,28 +1,57 @@
-const ExcelJS = require('exceljs');
+const ExcelJS = require("exceljs");
 
+// Función para verificar si un valor es un número
 function esNumero(num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+    return num !== null && !isNaN(parseFloat(num)) && isFinite(num);
 }
 
-async function leerDatos(ubi) {
+// Función para leer y procesar datos de Excel
+async function leerDatos(rutaArchivo, nombreHoja) {
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(ubi);
+    await workbook.xlsx.readFile(rutaArchivo);
     
+    const hoja = workbook.getWorksheet(nombreHoja);
+    if (!hoja) {
+        console.log(`No se encontró la hoja: ${nombreHoja}`);
+        return [];
+    }
+
     let datos = [];
-    
-    workbook.eachSheet((worksheet) => {
-        worksheet.eachRow((row) => {
-            row.eachCell((cell) => {
-                if (esNumero(cell.value)) {
-                    datos.push(parseFloat(cell.value));
-                }
-            });
-        });
-    });
+    let terFila = false;
+    let nFila = 0;
+    const maxFilas = hoja.rowCount;
+    const maxColumnas = hoja.columnCount;
+
+    while (!terFila) {
+        if (nFila >= maxFilas) break;
+        let terColumna = false;
+        let nColumnas = 0;
+
+        while (!terColumna) {
+            if (nColumnas >= maxColumnas) break;
+
+            let celda = hoja.getRow(nFila + 1).getCell(nColumnas + 1).value;
+            if (esNumero(celda)) {
+                datos.push(parseFloat(celda));
+            }
+
+            let datoSiguiente = hoja.getRow(nFila + 1).getCell(nColumnas + 2).value;
+            if (nColumnas + 1 >= maxColumnas || !esNumero(datoSiguiente)) {
+                terColumna = true;
+            }
+            nColumnas++;
+        }
+
+        let datoSiguienteFila = hoja.getRow(nFila + 2).getCell(nColumnas + 1).value;
+        if (nFila + 1 >= maxFilas || !esNumero(datoSiguienteFila)) {
+            terFila = true;
+        }
+        nFila++;
+    }
 
     datos.sort((a, b) => a - b);
     return datos;
 }
 
-// Ejemplo de uso
-leerDatos('archivo.xlsx').then(datos => console.log(datos)).catch(err => console.error(err));
+// Llamada a la función
+leerDatos("./js/ej.xlsx", "intervalos").then(datos => console.log("Datos ordenados:", datos));
