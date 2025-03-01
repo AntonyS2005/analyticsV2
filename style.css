@@ -1,87 +1,74 @@
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
-* {
-  padding: 0;
-  margin: 0;
-  background-color: black;
-}
-
-h1 {
-  color: #4eb429;
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-}
-
-.merriweather-light {
-  font-family: "Merriweather", serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.merriweather-regular {
-  font-family: "Merriweather", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.merriweather-bold {
-  font-family: "Merriweather", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.merriweather-black {
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.merriweather-light-italic {
-  font-family: "Merriweather", serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.merriweather-regular-italic {
-  font-family: "Merriweather", serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.merriweather-bold-italic {
-  font-family: "Merriweather", serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.merriweather-black-italic {
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  font-style: italic;
-}
-h1 {
-  color: #4eb429;
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  font-size: 60px;
-  text-align: center;
-}
-
-.starLogo {
-  margin: auto;
-  text-align: center;
-  justify-items: center;
-  justify-content: center;
-  width: 350px;
-  height: 350px;
-}
-
-button {
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  background-color: #4eb429;
-  border: none;
+/* Estilos generales */
+body {
+  background-color: #25262a;
   color: white;
-  padding: 15px 45px;
-  font-size: 45px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+nav {
+  background-color: #191919;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  font-size: 24px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #0b0b0b;
+}
+
+/* Banner */
+header {
+  background-image: url(img/fondo.jpg);
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+header h2 {
+  font-size: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+/* Botones */
+button {
+  background-color: #0b0b0b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
   cursor: pointer;
+  transition: backgraund: 0.03s;
+}
+
+button:hover {
+  background-color: #181818;
+}
+
+/* Bordes y separaciones */
+hr {
+  border: 1px solid #1a1a1a;
 }
