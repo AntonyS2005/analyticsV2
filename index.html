@@ -10,23 +10,64 @@
   </head>
   <body>
 
-    <nav>
-      <h1>Analytics</h1>
-      <ul>
-          <li><a href="#" class="hover:underline">Inicio</a></li>
-          <li><a href="#" class="hover:underline">Informacion</a></li>
-          <li><a href="#" class="hover:underline">Preguntas</a></li>
-          <li><a href="#" class="hover:underline">Herramientas</a></li>
-          <li><a href="#" class="hover:underline">ayuda</a></li>
+    <nav class="navbar">
+      <div class="logo"><img src="/img/logo.svg" alt="" width="50px"></div>
+      
+      <ul class="nav-links">
+          <li><a href="#intro">Inicio</a></li>
+          <li><a href="#stats">Informacion</a></li>
+          <li><a href="#">Preguntas</a></li>
+          <li><a href="#herramientas">Herramientas</a></li>
+          <li><a href="#Soporte">ayuda</a></li>
       </ul>
   </nav>
   
   <!-- Banner -->
-  <header>
-      <div>
-          <h2>Analytics</h2>
-      </div>
+  <header class="banner">
+          <h1>Analytics</h1>
   </header>
+
+  <section class="intro" id="intro">
+    <div class="intro-text">
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing 
+        elit. Blanditiis inventore natus officiis velit praesentium 
+        hic perferendis, sit id optio quod.
+      </p>
+    </div>
+
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="stat-card">
+      <h3>Tabla estadistica</h3>
+      <p>Lorem ipsum dolor sit amet.</p>
+    </div>
+    <div class="stat-card">
+      <h3>Combinaciones</h3>
+      <p>Lorem, ipsum dolor.</p>
+    </div>
+    <div class="stat-card">
+      <h3>Normal</h3>
+      <p>Lorem, ipsum dolor.</p>
+    </div>
+    <div class="stat-card">
+      <h3>Inversa</h3>
+      <p>Lorem, ipsum dolor.</p>
+    </div>
+  </section>
+  
+  <section class="Soporte" id="Soporte">
+    <div class="soporte-box">
+      <h3>Ayuda / Soporte</h3>
+      <input type="text" placeholder="Escribe tu mensaje aquí">
+      <button>Enviar</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Analytics. Todos los derechos reservados.</p>
+  </footer>
     <script src="/js/indexJS.js"></script>
   </body>
 </html>

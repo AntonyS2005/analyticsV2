@@ -1,74 +1,97 @@
-/* Estilos generales */
-body {
-  background-color: #25262a;
-  color: white;
-  font-family: Arial, sans-serif;
+/* Reset básico */
+body, h1, h2, h3, p, ul, li, button {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #282828;
+  color: #333;
 }
 
 /* Navbar */
-nav {
-  background-color: #191919;
-  padding: 15px;
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 30px;
+  background: #000000;
+  color: white;
 }
 
-nav h1 {
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.banner {
+  min-height: 200px;
+  text-align: center;
+  padding: 50px 0;
+  background: linear-gradient(to left, #000000 1px, #39FF14 50%, #000000);
+  color: white;
   font-size: 24px;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-nav ul li a {
+.intro {
+  min-height: 200px;
+  padding: 20px;
+  background: #1d1d1d;
+  text-align: center;
   color: white;
-  text-decoration: none;
-  transition: color 0.3s;
 }
 
-nav ul li a:hover {
-  color: #0b0b0b;
-}
-
-/* Banner */
-header {
-  background-image: url(img/fondo.jpg);
-  height: 300px;
+.stats {
+  min-height: 200px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
+  gap: 20px;
+  padding: 20px;
 }
 
-header h2 {
-  font-size: 36px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-/* Botones */
-button {
-  background-color: #0b0b0b;
+.stat-card {
   color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: backgraund: 0.03s;
+  width: 150px;
+  height: 100px;
+  background: #000000;
+  border-radius: 10px;
 }
 
-button:hover {
-  background-color: #181818;
+
+
+
+.soporte {
+  min-height: 300px;
+  padding: 20px;
+  background: #333333;
+  text-align: center;
 }
 
-/* Bordes y separaciones */
-hr {
-  border: 1px solid #1a1a1a;
+.soporte-box {
+  background: rgb(37, 37, 37);
+  padding: 20px;
+  border-radius: 5px;
+  display: inline-block;
 }
+
+footer {
+  min-height: 300px;
+  background: #264653;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+}
+
