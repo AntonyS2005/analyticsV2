@@ -1,8 +1,9 @@
 {
   "name": "analyticsv2",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "js/main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/AntonyS2005/analyticsV2#readme",
   "description": "",
   "dependencies": {
+    "electron": "^35.0.0",
     "exceljs": "^4.4.0"
   }
 }
