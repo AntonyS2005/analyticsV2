@@ -8,7 +8,13 @@
 <body>
     <h2>Subir Archivo Excel</h2>
     <input type="file" id="archivoExcel" accept=".xlsx, .xls">
+    <input type="text" name="" id="">
     <button onclick="procesarArchivo()">Leer Datos</button>
-    <script src="/js/analisisEstadistico.js"></script>
+    <p>tipo de analisis</p>
+    <select name="" id="">
+      <option value="int">por intervalos</option>
+      <option value="sen">sencillo</option>
+    </select>
+    <script src="js/analisisEstadistico.js"></script>
 </body>
 </html>
