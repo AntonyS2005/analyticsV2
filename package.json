@@ -1,7 +1,7 @@
 {
   "name": "analyticsv2",
   "version": "1.0.0",
-  "main": "js/main.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"

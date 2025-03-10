@@ -1,23 +1,40 @@
-import { leerDatos } from 'leerArchivo.js';
-
-document.getElementById('archivoExcel').addEventListener('change', async (event) => {
-  const archivo = event.target.files[0];
-  if (archivo) {
-      console.log("Archivo seleccionado:", archivo.name);
-
-      // Obtener la ruta del archivo desde el proceso principal
-      const ruta = await window.electron.obtenerRutaArchivo(archivo);
-      console.log("Ruta del archivo:", ruta);
-
-      // Llamamos a leerDatos con la ruta obtenida
-      const datos = await leerDatos(ruta, "Hoja1");  // Cambia "Hoja1" por el nombre real de la hoja
-      console.log("Datos procesados:", datos);
-
-      // Generamos el análisis estadístico
-      const resultado = generarTablaPorIntervalos(datos);
-      console.log("Análisis estadístico:", resultado);
-  }
+// analisisEstadistico.js
+// Si es un botón el que quieres que dispare la función
+const btnPrueba = document.getElementById('btnPrueba'); // Asegúrate que el id en el HTML sea btnPrueba
+btnPrueba.addEventListener("click", () => {
+    procesarArchivo();
 });
+
+
+function procesarArchivo() {
+  const archivoInput = document.getElementById('archivoExcel');
+  const archivo = archivoInput.files[0]; // Obtener el primer archivo seleccionado
+
+  if (archivo) {
+    // Pasar la ruta del archivo al proceso principal
+    const rutaArchivo = archivo.path;
+
+    // Llamar al proceso principal para leer el archivo
+    console.log("se llamo a la api ")
+    window.api.leerArchivo(rutaArchivo,"intervalos")
+      .then(datos => {
+        if (datos) {
+          console.log('Datos leídos:', datos);
+          // Aquí puedes hacer algo con los datos leídos
+        } else {
+          console.error('No se pudo leer el archivo.');
+        }
+      })
+      .catch(error => {
+        console.error('Error al procesar el archivo:', error);
+      });
+  } else {
+    console.error('No se seleccionó un archivo.');
+  }
+}
+
+
+
 
 
 

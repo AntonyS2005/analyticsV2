@@ -1,5 +1,3 @@
-//funcion que lee el excel
-
 const ExcelJS = require("exceljs");
 
 // Función para verificar si un valor es un número
@@ -8,10 +6,12 @@ function esNumero(num) {
 }
 
 // Función para leer y procesar la tabla de manera dinámica
-export async function leerDatos(rutaArchivo, nombreHoja) {
+async function leerDatos(rutaArchivo, nombreHoja) {
     const workbook = new ExcelJS.Workbook();
+    console.log("Leyendo archivo en ruta:", rutaArchivo);
     await workbook.xlsx.readFile(rutaArchivo);
-    
+    console.log("Archivo cargado correctamente");
+
     const hoja = workbook.getWorksheet(nombreHoja);
     if (!hoja) {
         console.log(`No se encontró la hoja: ${nombreHoja}`);
@@ -25,6 +25,7 @@ export async function leerDatos(rutaArchivo, nombreHoja) {
     // Determinar el tamaño real de la tabla
     let maxFilas = hoja.rowCount;
     let maxColumnas = hoja.columnCount;  // ✅ CORREGIDO
+    console.log(`Filas en la hoja: ${maxFilas}, Columnas: ${maxColumnas}`);
 
     while (!terFila) {
         if (nFila >= maxFilas) break;
@@ -35,6 +36,7 @@ export async function leerDatos(rutaArchivo, nombreHoja) {
         while (!terColumna) {
             if (nColumnas >= maxColumnas) break;
             let celda = fila.getCell(nColumnas + 1).value;
+            console.log(`Leyendo celda [${nFila + 1}, ${nColumnas + 1}] con valor: ${celda}`);
 
             if (esNumero(celda)) {
                 datos.push(parseFloat(celda));
@@ -58,7 +60,10 @@ export async function leerDatos(rutaArchivo, nombreHoja) {
         nFila++;
     }
 
+    console.log("Datos procesados antes de ordenar:", datos);
     datos.sort((a, b) => a - b); // Ordenar los datos en orden ascendente
+    console.log("Datos ordenados:", datos);
     return datos;
 }
 
+module.exports = { leerDatos };
