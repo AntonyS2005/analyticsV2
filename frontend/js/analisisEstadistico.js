@@ -1,37 +1,49 @@
-// analisisEstadistico.js
-// Si es un botón el que quieres que dispare la función
-const btnPrueba = document.getElementById('btnPrueba'); // Asegúrate que el id en el HTML sea btnPrueba
-btnPrueba.addEventListener("click", () => {
-    procesarArchivo();
+
+let btnCalc = document.getElementById("btnCalc");
+btnCalc.addEventListener("click",()=>{
+  procesarArchivo();
+  
 });
 
 
 function procesarArchivo() {
-  const archivoInput = document.getElementById('archivoExcel');
-  const archivo = archivoInput.files[0]; // Obtener el primer archivo seleccionado
+    const archivoInput = document.getElementById("archivoExcel");
+    const archivo = archivoInput.files[0]; // Obtener el archivo seleccionado
 
-  if (archivo) {
-    // Pasar la ruta del archivo al proceso principal
-    const rutaArchivo = archivo.path;
+    if (archivo) {
+        const lector = new FileReader();
+        lector.readAsArrayBuffer(archivo); // Convertir archivo en ArrayBuffer
 
-    // Llamar al proceso principal para leer el archivo
-    console.log("se llamo a la api ")
-    window.api.leerArchivo(rutaArchivo,"intervalos")
-      .then(datos => {
-        if (datos) {
-          console.log('Datos leídos:', datos);
-          // Aquí puedes hacer algo con los datos leídos
-        } else {
-          console.error('No se pudo leer el archivo.');
-        }
-      })
-      .catch(error => {
-        console.error('Error al procesar el archivo:', error);
-      });
-  } else {
-    console.error('No se seleccionó un archivo.');
-  }
+        lector.onload = function () {
+            const uint8Array = new Uint8Array(lector.result); // Convertir a Uint8Array
+
+            console.log("Se envió el archivo a la API en formato Uint8Array");
+
+            // Llamar al proceso principal y enviar el Uint8Array
+            window.api.leerArchivo(uint8Array, "intervalos")
+                .then(datos => {
+                    if (datos) {
+                        console.log("Datos leídos:", datos);
+                        generarTablaPorIntervalos(datos)
+                    } else {
+                        console.error("No se pudo leer el archivo.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al procesar el archivo:", error);
+                });
+        };
+
+        lector.onerror = function (error) {
+            console.error("Error al leer el archivo:", error);
+        };
+    } else {
+        console.error("No se seleccionó un archivo.");
+    }
 }
+
+
+
 
 
 
@@ -56,8 +68,8 @@ function round(value, decimals) {
   }
   
   function generarTablaPorIntervalos(dato) {
-    let min_val = Math.min(...dato);
-    let max_val = Math.max(...dato);
+    let min_val =dato[0];
+    let max_val =dato[dato.length - 1 ];
     let n = dato.length;
     let rango = max_val - min_val;
   
@@ -173,23 +185,141 @@ function round(value, decimals) {
     let sumFPorDDDD = fPorDDDD.reduce((acc, val) => acc + val, 0);
     let k = round(sumFPorDDDD / (n * Math.pow(desviacionEst, 4)), 2);
   
+
+    // Obtener la referencia al div vacío
+    const contenedor = document.getElementById("divTabla");
+
+
+    // Crear el elemento de la tabla
+    const tabla = document.createElement("table");
+    tabla.setAttribute("border", "1"); // Agregar borde a la tabla
+    const encabezado = document.createElement("tr");
+const cabeceras = ['LI', 'LS', 'XI', 'Frecuencia', 'Fr', 'Fa', 'FaPor', 'FPorXi', 'D', 'LS2', 'Xi2', 'Frecuencia2', 'Fr2', 'Fa2', 'FdPor', 'FPorXi2', 'D2', 'Fr2', 'Fa2', 'FaPor2', 'FPorXi2', 'D2', 'FPorAbsD', 'FPorDD', 'FPorDDD', 'FPorDDDD'];
+cabeceras.forEach(titulo => {
+  let th = document.createElement("th");
+  th.textContent = titulo;
+  encabezado.appendChild(th);
+});
+tabla.appendChild(encabezado);
+
+// Usar un bucle para crear las filas y columnas
+for (let i = 0; i < li.length; i++) {
+  // Crear una nueva fila
+  const fila = document.createElement("tr");
+
+  // Crear y agregar las celdas para cada valor
+  let celda = document.createElement("td");
+  celda.textContent = li[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = ls[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = xi[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = frecuencia[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fr[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fa[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = faPor[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorXi[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = d[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = ls[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = xi[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = frecuencia[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fr[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fa[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fdPor[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorXi[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = d[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fr[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fa[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = faPor[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorXi[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = d[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorAbsD[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorDD[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorDDD[i];
+  fila.appendChild(celda);
+
+  celda = document.createElement("td");
+  celda.textContent = fPorDDDD[i];
+  fila.appendChild(celda);
+
+  // Añadir la fila a la tabla
+  tabla.appendChild(fila);
+}
+
+
+    // Agregar la tabla generada al div
+    contenedor.appendChild(tabla);
     return {
-      valor: xi,
-      li: li,
-      ls: ls,
-      xi: xi,
-      frecuencia: frecuencia,
-      fr: fr,
-      fa: fa,
-      faPor: faPor,
-      fd: fd,
-      fdPor: fdPor,
-      fPorXi: fPorXi,
-      d: d,
-      fPorAbsD: fPorAbsD,
-      fPorDD: fPorDD,
-      fPorDDD: fPorDDD,
-      fPorDDDD: fPorDDDD,
       moda: moda,
       mediana: mediana,
       mediaArit: mediaArit,
@@ -370,4 +500,70 @@ function listas(datos) {
   let datos = [10, 20, 20, 30, 40, 50, 50, 50, 60, 70];
   console.log(listas(datos));
   
-	
+	//
+  // LOGICA PARA MOSTRAR DATOS
+  //
+
+  function crearTablaAnalisisEstadistico(datos) {
+    let tablaHTML = `<table border="1">
+        <thead>
+            <tr>
+                <th>LI</th>
+                <th>LS</th>
+                <th>Xi</th>
+                <th>f</th>
+                <th>fr%</th>
+                <th>Fa</th>
+                <th>Fa%</th>
+                <th>Fd</th>
+                <th>Fd%</th>
+                <th>f*Xi</th>
+                <th>d</th>
+                <th>f*|d|</th>
+                <th>f*d²</th>
+                <th>f*d³</th>
+                <th>f*d⁴</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    for (let i = 0; i < datos.valor.length; i++) {
+        tablaHTML += `<tr>
+            <td>${datos.li[i]}</td>
+            <td>${datos.ls[i]}</td>
+            <td>${datos.xi[i]}</td>
+            <td>${datos.frecuencia[i]}</td>
+            <td>${datos.fr[i]}%</td>
+            <td>${datos.fa[i]}</td>
+            <td>${datos.faPor[i]}%</td>
+            <td>${datos.fd[i]}</td>
+            <td>${datos.fdPor[i]}%</td>
+            <td>${datos.fPorXi[i]}</td>
+            <td>${datos.d[i]}</td>
+            <td>${datos.fPorAbsD[i]}</td>
+            <td>${datos.fPorDD[i]}</td>
+            <td>${datos.fPorDDD[i]}</td>
+            <td>${datos.fPorDDDD[i]}</td>
+        </tr>`;
+    }
+
+    tablaHTML += `</tbody></table>`;
+
+    document.getElementById("tabla").innerHTML = tablaHTML;
+}
+
+function mostrarMedidasDePosicion(datos) {
+    let medidasHTML = `<h3>Medidas de Posición</h3>
+        <ul>
+            <li><b>Media Aritmética:</b> ${datos.mediaArit}</li>
+            <li><b>Moda:</b> ${datos.moda}</li>
+            <li><b>Mediana:</b> ${datos.mediana}</li>
+            <li><b>Desviación Media:</b> ${datos.desviacionMed}</li>
+            <li><b>Desviación Estándar:</b> ${datos.desviacionEst}</li>
+            <li><b>Asimetría (Sk):</b> ${datos.sk}</li>
+            <li><b>Curtosis (K):</b> ${datos.k}</li>
+        </ul>`;
+
+    document.getElementById("medidasDePosicion").innerHTML = medidasHTML;
+}
+

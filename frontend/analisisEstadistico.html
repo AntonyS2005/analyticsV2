@@ -8,13 +8,21 @@
 <body>
     <h2>Subir Archivo Excel</h2>
     <input type="file" id="archivoExcel" accept=".xlsx, .xls">
+    <p>escriba la hoja que desea analizar</p>
     <input type="text" name="" id="">
-    <button id="btnPrueba">Leer Datos</button>
+
     <p>tipo de analisis</p>
     <select name="" id="tipo">
+      <option value="">elija una opcion de analisis</option>
       <option value="int">por intervalos</option>
       <option value="sen">sencillo</option>
     </select>
+    <button id="btnCalc">Calcular</button>
+
+    <div id="divTabla"></div>
+
+    <div id="medidasDePosicion"></div>
+
     <script src="./js/analisisEstadistico.js"></script>
 </body>
 </html>
