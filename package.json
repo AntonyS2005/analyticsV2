@@ -17,9 +17,10 @@
     "url": "https://github.com/AntonyS2005/analyticsV2/issues"
   },
   "homepage": "https://github.com/AntonyS2005/analyticsV2#readme",
-  "description": "",
   "dependencies": {
-    "electron": "^35.0.0",
+    "electron": "^35.0.1",
     "exceljs": "^4.4.0"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

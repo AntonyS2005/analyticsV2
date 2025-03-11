@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analytics</title>
     <link rel="icon" href="/img/logo.png" type="image/png" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="/css/bien.css" />
   </head>
   <body>
 
-    <nav class="navbar">
-      <div class="logo"><img src="/img/logo.svg" alt="" width="50px"></div>
+  <nav class="navbar">
+    <div class="logo"><img src="/frontend/img/logo.svg" alt="" width="50px"></div>
       
-      <ul class="nav-links">
-          <li><a href="#intro">Inicio</a></li>
-          <li><a href="#stats">Informacion</a></li>
-          <li><a href="#">Preguntas</a></li>
-          <li><a href="analisisEstadistico.html">Herramientas</a></li>
-          <li><a href="#Soporte">ayuda</a></li>
+    <ul class="nav-links">
+        <li><a href="#intro">Inicio</a></li>
+        <li><a href="#stats">Informacion</a></li>
+        <li><a href="#">Preguntas</a></li>
+        <li><a href="#">Herramientas</a></li>
+        <li><a href="#Soporte">ayuda</a></li>
+        <li><a href="#">    </a></li>
+        <li><a href="#">    </a></li>
       </ul>
   </nav>
   
@@ -38,22 +40,45 @@
 
   </section>
 
-  <section class="stats" id="stats">
-    <div class="stat-card">
-      <h3>Tabla estadistica</h3>
-      <p>Lorem ipsum dolor sit amet.</p>
-    </div>
-    <div class="stat-card">
-      <h3>Combinaciones</h3>
-      <p>Lorem, ipsum dolor.</p>
-    </div>
-    <div class="stat-card">
-      <h3>Normal</h3>
-      <p>Lorem, ipsum dolor.</p>
-    </div>
-    <div class="stat-card">
-      <h3>Inversa</h3>
-      <p>Lorem, ipsum dolor.</p>
+  <section class="cards-box">
+    <h3 class="h3-text">Herramientas de analisis estdistico</h3>
+    <div class="stats" id="stats">
+      <div class="tarjeta">
+        <img src="/frontend//img/conbinaciones.jpg" alt="Imagen de la tarjeta" class="imagen">
+        <div class="texto">
+            <h3>Combinaciones</h3>
+            <p>Lorem ipsum dolor sit amet consectetur 
+              adipisicing elit. Debitis optio quis praesentium.
+              Eos ab dolore impedit minima. Veniam, debitis vero.
+            </p>
+            <br>
+            <a href="otra-pagina.html" class="boton">Ir a otra página</a>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <img src="/frontend/img/graficas.jpg" alt="Imagen de la tarjeta" class="imagen">
+        <div class="texto">
+            <h3>Analisis Estadistico</h3>
+            <p>Lorem ipsum dolor sit amet consectetur 
+              adipisicing elit. Debitis optio quis praesentium.
+              Eos ab dolore impedit minima. Veniam, debitis vero.
+            </p>
+            <br>
+            <a href="/frontend/analisisEstadistico.html" class="boton">Ir a otra página</a>
+        </div>
+      </div>
+      <div class="tarjeta">
+        <img src="/frontend/img/distribuciones.jpg" alt="Imagen de la tarjeta" class="imagen">
+        <div class="texto">
+            <h3>Distribuciones</h3>
+            <p>Lorem ipsum dolor sit amet consectetur 
+              adipisicing elit. Debitis optio quis praesentium.
+              Eos ab dolore impedit minima. Veniam, debitis vero.
+            </p>
+            <br>
+            <a href="otra-pagina.html" class="boton">Ir a otra página</a>
+        </div>
+      </div>
     </div>
   </section>
   
@@ -65,9 +90,17 @@
     </div>
   </section>
 
-  <footer>
+  <footer class="footer">
+    <br>
+    <div class="creditos">
+      <span class="credito" data-nombre="Antony Ramiro">Programación</span>
+      <span class="credito" data-nombre="Hugo Roberto">Diseño de pagina</span>
+      <span class="credito" data-nombre="Melany Mariana">Diseño de pagina</span>
+    </div>
+    <br>
+    <p>__________________________________________________________________________________</p>
     <p>&copy; 2024 Analytics. Todos los derechos reservados.</p>
   </footer>
-    <script src="/js/indexJS.js"></script>
+    <script src="/frontend/js/menu.js"></script>
   </body>
 </html>
