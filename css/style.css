@@ -63,7 +63,14 @@ body {
   min-height: 200px;
   text-align: center;
   padding: 50px 0;
-  background: linear-gradient(to left, #fff 100px, #000 55%, #fff);
+  background: linear-gradient(
+      50deg,
+      rgba(5, 30, 0, 0.684) 30%,
+      rgba(2, 96, 0, 0.852)
+  ), 
+  url("../frontend/img/fondo2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   color: white;
   font-size: 24px;
 }
@@ -143,41 +150,109 @@ body {
   background-color: #037e03;
 }
 
-
-
-
 .soporte {
-  min-height: 300px;
-  padding: 20px;
-  background: #333333;
-  text-align: center;
+  padding: 100px 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:#ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
 
-.soporte-box {
-  background: rgb(37, 37, 37);
-  padding: 20px;
-  border-radius: 5px;
-  display: inline-block;
+.form-content {
+  background: linear-gradient(
+      50deg,
+      rgba(23, 23, 23, 0.74) 30%,
+      rgba(9, 160, 6, 0.7)
+  ), 
+  url("../frontend/img/fondo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 50px;
+  width: 900px;
+  border-radius: 25px;
+  margin: 50px auto;
 }
 
-.footer {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  text-align: center;
-  t
-  padding: 20px;
-  position: relative;
-  overflow: hidden;  
-}  
+.form-content h2 {
+  color: #F4F6F9;
+  font-size: 30px bold;
+  margin-bottom: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+label {
+  font-size: 17px;
+  color: #959AAB;
+  margin-bottom: 5px;
+}
+
+input, 
+textarea {
+  padding: 10px 8px;
+  background-color: #333646;
+  border: 0;
+  font-size: 15px;
+  color: #F4F6F9;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+input:focus, 
+textarea:focus {
+  outline: 1px solid #1E92E9;
+}
+
+.btn {
+  background-color: #1E92E9;
+  width: 150px;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #219BF9;
+}
+
+/* Responsividad */
+@media (max-width: 991px) {
+  .soporte {
+      padding: 30px;
+  }
+
+  .form-content {
+      width: 100%;
+  }
+
+  form {
+      width: 100%;
+  }
+}
+
+
+
+
+
+
 
 .creditos {
-  position: relative;  
+  position: relative;
 }  
 
 .credito {
-  cursor: pointer;
-  margin: 0 15px;
-  position: relative;  
+  font-size: 18px;
+  text-decoration: none;
+  color: #BBBBBB;
+  display: block;
+  margin-bottom: 15px;
+  transition: all .3s ease; 
 }  
 
 .credito::after {
@@ -188,7 +263,8 @@ body {
   transform: translateX(-50%);
   color: white;
   font-size: 10px;
-  padding: 5px;
+  padding: 10px;
+  background-color: #282828;
   border-radius: 5px;
   white-space: nowrap;
   opacity: 0;
@@ -201,6 +277,109 @@ body {
   opacity: 1;
   visibility: visible;  
 }  
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer {
+  background-color: #1c1d1e;
+  padding: 80px 0;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-links {
+  width: 25%;
+  padding: 0 15px;
+}
+
+.footer-links h4 {
+  font-size: 20px;
+  color: #FFFFFF;
+  margin-bottom: 25px;
+  font-weight: 500;
+  border-bottom: 2px solid #01c004;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.footer-links ul li a {  
+  font-size: 18px;
+  text-decoration: none;
+  color: #BBBBBB;
+  display: block;
+  margin-bottom: 15px;
+  transition: all .3s ease;
+}
+  
+.footer-links ul li a:hover {
+  color: #FFFFFF;
+  padding-left: 6px;
+}
+
+.social-link {
+  position: relative;
+}
+
+.social-link a {
+  display: inline-block;  
+  min-height: 40px;
+  width: 40px;  
+  background-color: rgba(255, 255, 255, 0.2);  
+  margin: 0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  transition: all .5s ease;
+  position: relative;
+}
+
+/* Tooltip para los iconos de redes sociales */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 6;
+  font-size: 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+    
+@media (max-width:991px) {    
+  .footer-row {
+    text-align: center;
+    
+  }
+    
+  .footer-links {  
+    width: 100%;
+    margin-bottom: 30px;
+    }    
+}
+
 
 
 @media (max-width: 768px) {
