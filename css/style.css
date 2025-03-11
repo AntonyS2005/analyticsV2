@@ -150,6 +150,8 @@ body {
   background-color: #037e03;
 }
 
+/*formulario de soporte*/
+
 .soporte {
   padding: 100px 30px;
   font-family: Arial, Helvetica, sans-serif;
@@ -207,18 +209,18 @@ textarea {
 
 input:focus, 
 textarea:focus {
-  outline: 1px solid #1E92E9;
+  outline: 1px solid #009f10;
 }
 
 .btn {
-  background-color: #1E92E9;
+  background-color: #00bb00;
   width: 150px;
   align-self: flex-end;
   cursor: pointer;
 }
 
 .btn:hover {
-  background-color: #219BF9;
+  background-color: #019b01;
 }
 
 /* Responsividad */
@@ -235,11 +237,6 @@ textarea:focus {
       width: 100%;
   }
 }
-
-
-
-
-
 
 
 .creditos {
@@ -318,7 +315,7 @@ textarea:focus {
 }
   
 .footer-links ul li a:hover {
-  color: #FFFFFF;
+  color: #00bc00;
   padding-left: 6px;
 }
 
@@ -365,6 +362,7 @@ textarea:focus {
 .tooltip:hover::after {
   opacity: 1;
   visibility: visible;
+  padding-left: 6px;
 }
 
     
