@@ -8,13 +8,41 @@
 <body>
     <h2>Subir Archivo Excel</h2>
     <input type="file" id="archivoExcel" accept=".xlsx, .xls">
-    <input type="text" name="" id="">
-    <button id="btnPrueba">Leer Datos</button>
+    <p>escriba la hoja que desea analizar</p>
+    <input type="text" name="" id="txtSheet">
+
     <p>tipo de analisis</p>
     <select name="" id="tipo">
+      <option value="">elija una opcion de analisis</option>
       <option value="int">por intervalos</option>
       <option value="sen">sencillo</option>
     </select>
+    <button id="btnCalc">Calcular</button>
+
+    <div id="divTabla"></div>
+    <br>
+    <div id="divDatos"></div>
+    <br>
+    
+    <!-- Selección del tipo de medida -->
+<label for="tipoMedida">Tipo de medida:</label>
+<select id="tipoMedida">
+  <option value="cuartil">Cuartil</option>
+  <option value="decil">Decil</option>
+  <option value="percentil">Percentil</option>
+</select>
+
+<!-- Ingreso del número (por ejemplo, 1 para el primer cuartil, etc.) -->
+<label for="indiceMedida">ingrese la posicion:</label>
+<input type="number" id="indiceMedida" placeholder="Ingresa el número" min="1">
+
+<!-- Botón para calcular la medida de posición -->
+<button id="btnCalcularMedida">Calcular medida de posición</button>
+
+<!-- Contenedor para mostrar la respuesta -->
+<div id="resultadoMedida"></div>
+
+
     <script src="./js/analisisEstadistico.js"></script>
 </body>
 </html>

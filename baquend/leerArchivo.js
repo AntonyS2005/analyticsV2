@@ -5,11 +5,11 @@ function esNumero(num) {
     return num !== null && !isNaN(parseFloat(num)) && isFinite(num);
 }
 
-// Función para leer y procesar la tabla de manera dinámica
-async function leerDatos(rutaArchivo, nombreHoja) {
+// Función para leer y procesar la tabla desde un buffer
+async function leerDatos(bufferArchivo, nombreHoja) {
     const workbook = new ExcelJS.Workbook();
-    console.log("Leyendo archivo en ruta:", rutaArchivo);
-    await workbook.xlsx.readFile(rutaArchivo);
+    console.log("Cargando archivo desde buffer...");
+    await workbook.xlsx.load(bufferArchivo);
     console.log("Archivo cargado correctamente");
 
     const hoja = workbook.getWorksheet(nombreHoja);
@@ -24,25 +24,23 @@ async function leerDatos(rutaArchivo, nombreHoja) {
     
     // Determinar el tamaño real de la tabla
     let maxFilas = hoja.rowCount;
-    let maxColumnas = hoja.columnCount;  // ✅ CORREGIDO
+    let maxColumnas = hoja.columnCount; 
     console.log(`Filas en la hoja: ${maxFilas}, Columnas: ${maxColumnas}`);
 
     while (!terFila) {
         if (nFila >= maxFilas) break;
-        let fila = hoja.getRow(nFila + 1); // ExcelJS usa 1-based index
+        let fila = hoja.getRow(nFila + 1);
         let nColumnas = 0;
         let terColumna = false;
 
         while (!terColumna) {
             if (nColumnas >= maxColumnas) break;
             let celda = fila.getCell(nColumnas + 1).value;
-            console.log(`Leyendo celda [${nFila + 1}, ${nColumnas + 1}] con valor: ${celda}`);
 
             if (esNumero(celda)) {
                 datos.push(parseFloat(celda));
             }
 
-            // Verificar si la siguiente celda en la misma fila ya no es un número
             let siguienteCelda = fila.getCell(nColumnas + 2).value;
             if (!esNumero(siguienteCelda) || nColumnas + 1 >= maxColumnas) {
                 terColumna = true;
@@ -51,7 +49,6 @@ async function leerDatos(rutaArchivo, nombreHoja) {
             nColumnas++;
         }
 
-        // Verificar si la primera celda de la siguiente fila no es un número para terminar
         let siguienteFila = hoja.getRow(nFila + 2);
         if (!esNumero(siguienteFila.getCell(1).value) || nFila + 1 >= maxFilas) {
             terFila = true;
@@ -59,10 +56,7 @@ async function leerDatos(rutaArchivo, nombreHoja) {
 
         nFila++;
     }
-
-    console.log("Datos procesados antes de ordenar:", datos);
-    datos.sort((a, b) => a - b); // Ordenar los datos en orden ascendente
-    console.log("Datos ordenados:", datos);
+    datos.sort((a, b) => a - b);
     return datos;
 }
 
