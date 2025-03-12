@@ -6,41 +6,35 @@ btnCalc.addEventListener("click",()=>{
 });
 
 
-function procesarArchivo() {
-    const archivoInput = document.getElementById("archivoExcel");
-    const archivo = archivoInput.files[0]; // Obtener el archivo seleccionado
+async function procesarArchivo() {
+  const archivoInput = document.getElementById("archivoExcel");
+  const archivo = archivoInput.files[0];
+  const hoja = document.getElementById("txtSheet").value;
 
-    if (archivo) {
-        const lector = new FileReader();
-        lector.readAsArrayBuffer(archivo); // Convertir archivo en ArrayBuffer
+  if (archivo) {
+      const formData = new FormData();
+      formData.append("archivo", archivo);
+      formData.append("nombre_hoja", hoja);
 
-        lector.onload = function () {
-            const uint8Array = new Uint8Array(lector.result); // Convertir a Uint8Array
+      try {
+          const respuesta = await fetch("http://127.0.0.1:8000/procesar_excel/", {
+              method: "POST",
+              body: formData,
+          });
 
-            console.log("Se envió el archivo a la API en formato Uint8Array");
-            let txtSheet = document.getElementById("txtSheet");
-            let hoja =txtSheet.value;
-            // Llamar al proceso principal y enviar el Uint8Array
-            window.api.leerArchivo(uint8Array, hoja)
-                .then(datos => {
-                    if (datos) {
-                        console.log("Datos leídos:", datos);
-                        llamarAnalisis(datos);
-                    } else {
-                        console.error("No se pudo leer el archivo.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error al procesar el archivo:", error);
-                });
-        };
+          if (!respuesta.ok) {
+              throw new Error(`HTTP error! status: ${respuesta.status}`);
+          }
 
-        lector.onerror = function (error) {
-            console.error("Error al leer el archivo:", error);
-        };
-    } else {
-        console.error("No se seleccionó un archivo.");
-    }
+          const datos = await respuesta.json(); // Obtener la respuesta JSON
+          console.log("Datos leídos:", datos.datos); // Acceder al array de datos
+          llamarAnalisis(datos.datos); // Pasar el array a llamarAnalisis
+      } catch (error) {
+          console.error("Error al procesar el archivo:", error);
+      }
+  } else {
+      console.error("No se seleccionó un archivo.");
+  }
 }
 
 

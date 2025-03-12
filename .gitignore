@@ -1,2 +1,3 @@
-node_modules/
-baquend/venv/
+
+bakend/venv/
+bakend/_pycache_/
