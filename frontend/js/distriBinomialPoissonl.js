@@ -1,4 +1,4 @@
-let tamanoX = 400, tamanoy = 400;
+let tamanoX = 400, tamanoy = 400,colorResultados ='#00bb2d',colorNoResultados = 'gray';
 
 function factorial(n) {
     if (n === 0 || n === 1) {
@@ -65,7 +65,7 @@ function graficar() {
             y: yValues,
             type: 'bar',
             marker: {
-                color: xValues.map(x => (acumulado ? x <= exitos : x === exitos) ? 'royalblue' : 'lightgray'),
+                color: xValues.map(x => (acumulado ? x <= exitos : x === exitos) ? colorResultados : colorNoResultados),
                 line: {
                     width: 1,
                     color: 'black'
@@ -96,7 +96,7 @@ function graficar() {
             y: yValues,
             type: 'bar',
             marker: {
-                color: xValues.map((val, i) => (acumulado ? i <= x : i === x) ? 'royalblue' : 'lightgray'), // Corregido aquí
+                color: xValues.map((val, i) => (acumulado ? i <= x : i === x) ? colorResultados : colorNoResultados), // Corregido aquí
                 line: {
                     width: 1,
                     color: 'black'
