@@ -68,7 +68,7 @@ function calZa(nc, ns) {
     
     function generarInputs() {
       const tipoCalculo = tipoCalculoSelect.value;
-      inputsDiv.innerHTML = ""; // Limpiar inputs anteriores
+      inputsDiv.innerHTML = "";
     
       switch (tipoCalculo) {
         case "mediaConocida":
@@ -103,6 +103,7 @@ function calZa(nc, ns) {
             `;
             break;
       }
+      resultadoDiv.textContent = "";
     }
     
     function calcular() {
@@ -143,7 +144,7 @@ function calZa(nc, ns) {
     const totalEncuestados = parseInt(document.getElementById("totalEncuestados").value);
     const nivelConfianzaProporcion = parseFloat(document.getElementById("nivelConfianza").value);
   
-    const proporcionMuestral = cantidadExitos / totalEncuestados; // Cálculo de p
+    const proporcionMuestral = cantidadExitos / totalEncuestados;
   
     const zProporcion = calZa(nivelConfianzaProporcion, 100 - nivelConfianzaProporcion);
     const margenErrorProporcion = zProporcion * Math.sqrt((proporcionMuestral * (1 - proporcionMuestral)) / totalEncuestados);
