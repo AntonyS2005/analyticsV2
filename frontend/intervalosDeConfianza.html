@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Intervalos de Confianza</title>
+</head>
+<body>
+  <h1>Calculadora de Intervalos de Confianza</h1>
+
+  <label for="tipoCalculo">Seleccione el cálculo:</label>
+  <select id="tipoCalculo">
+    <option value="mediaConocida">Media (Desviación estándar poblacional conocida)</option>
+    <option value="mediaDesconocida">Media (Desviación estándar poblacional desconocida)</option>
+    <option value="muestraPequena">Media (Muestra pequeña)</option>
+    <option value="proporcion">Proporción</option>
+  </select>
+
+  <div id="inputs">
+    </div>
+
+  <button onclick="calcular()">Calcular</button>
+
+  <div id="resultado">
+    </div>
+
+  <script src="js/intervaloDeConfianza.js"></script>
+</body>
+</html>
