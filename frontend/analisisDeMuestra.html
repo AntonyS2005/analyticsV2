@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Análisis de Datos</title>
+</head>
+<body>
+    <h1>Análisis de Datos</h1>
+    <input type="file" id="archivoExcel" accept=".xlsx, .xls"><br><br>
+    <label for="txtSheet">Nombre de la Hoja:</label>
+    <input type="text" id="txtSheet" value="Hoja1"><br><br>
+    <label for="txtNum">Número a comparar:</label>
+    <input type="number" id="txtNum"><br><br>
+    <button onclick="calcular()">Calcular</button><br><br>
+    <table id="resultados" border="1">
+        <thead>
+            <tr>
+                <th>Mayor</th>
+                <th>Menor</th>
+                <th>Mayor o Igual</th>
+                <th>Menor o Igual</th>
+                <th>Igual</th>
+                <th>Total</th> </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="mayor"></td>
+                <td id="menor"></td>
+                <td id="mayorIgual"></td>
+                <td id="menorIgual"></td>
+                <td id="igual"></td>
+                <td id="total"></td> </tr>
+        </tbody>
+    </table>
+
+    <script src="js/analisisDeMuestras.js"></script>
+</body>
+</html>
