@@ -4,16 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="/frontend/css/bien.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
+  <nav class="menu">
+    <div>
+      <a href="index.html" class="logo"><img src="/frontend/img/logo.svg" alt="Logo" width="150px"></a>
+      <br><br><br><br>
+      <h3>Herramientas</h3>
+    </div>
+      <a href="intervalosDeConfianza.html" class="a"><i class="fas fa-chart-line"></i><p>intervaloDeConfianza</p></a>
+      <a href="tamañoDeMuestra.html" class="a"><i class="fas fa-tachometer-alt"></i><p>Tamaño de Muestra</p></a>
+      <a href="calc_permutaciones.html" class="a"><i class="fas fa-chart-area"></i><p>Permutaciones</p></a>
+      <a href="distribuciones.html" class="a"><i class="fas fa-chart-bar"></i><p>Distribuciones</p></a>
+      <a href="analisisEstadistico.html" class="a"><i class="fas fa-table"></i><p>analisis Estadistico</p></a>
+  </nav>
+
+  <div class="contenido">
     <h2>Subir Archivo Excel</h2>
     <input type="file" id="archivoExcel" accept=".xlsx, .xls">
     <p>escriba la hoja que desea analizar</p>
-    <input type="text" name="" id="txtSheet">
+    <input type="text" id="txtSheet">
 
-    <p>tipo de analisis</p>
-    <select name="" id="tipo">
-      <option value="">elija una opcion de analisis</option>\
+    <p>tipo de análisis</p>
+    <select id="tipo">
+      <option value="">elija una opción de análisis</option>
       <option value="int">por intervalos</option>
       <option value="sen">sencillo</option>
     </select>
@@ -23,26 +39,26 @@
     <br>
     <div id="divDatos"></div>
     <br>
-    
+
     <!-- Selección del tipo de medida -->
-<label for="tipoMedida">Tipo de medida:</label>
-<select id="tipoMedida">
-  <option value="cuartil">Cuartil</option>
-  <option value="decil">Decil</option>
-  <option value="percentil">Percentil</option>
-</select>
+    <label for="tipoMedida">Tipo de medida:</label>
+    <select id="tipoMedida">
+      <option value="cuartil">Cuartil</option>
+      <option value="decil">Decil</option>
+      <option value="percentil">Percentil</option>
+    </select>
 
-<!-- Ingreso del número (por ejemplo, 1 para el primer cuartil, etc.) -->
-<label for="indiceMedida">ingrese la posicion:</label>
-<input type="number" id="indiceMedida" placeholder="Ingresa el número" min="1">
+    <!-- Ingreso del número -->
+    <label for="indiceMedida">Ingrese la posición:</label>
+    <input type="number" id="indiceMedida" placeholder="Ingresa el número" min="1">
 
-<!-- Botón para calcular la medida de posición -->
-<button id="btnCalcularMedida">Calcular medida de posición</button>
+    <!-- Botón para calcular la medida de posición -->
+    <button id="btnCalcularMedida">Calcular medida de posición</button>
 
-<!-- Contenedor para mostrar la respuesta -->
-<div id="resultadoMedida"></div>
+    <!-- Contenedor para mostrar la respuesta -->
+    <div id="resultadoMedida"></div>
+  </div>
 
-
-    <script src="./js/analisisEstadistico.js"></script>
+  <script src="./js/analisisEstadistico.js"></script>
 </body>
 </html>

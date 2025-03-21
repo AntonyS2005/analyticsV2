@@ -1,4 +1,4 @@
-let tamanoX = 400, tamanoy = 400, colorResultados = '#00bb2d', colorNoResultados = 'gray';
+let tamanoX = 600, tamanoy = 400, colorResultados = '#0ed700', colorNoResultados = '#076800';
 
 function factorial(n) {
     if (n === 0 || n === 1) {
