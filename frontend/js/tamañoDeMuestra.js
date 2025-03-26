@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function crearInput(id, labelText) {
+        divRespuesta.innerHTML = "";
         let label = document.createElement("label");
         label.textContent = labelText;
         label.setAttribute("for", id);

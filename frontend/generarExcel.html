@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Excel - Distribución Normal</title>
+</head>
+<body>
+  <div id="genExcel">
+    <h1>Generador de Excel con Distribución Normal</h1>
+
+    <label for="tamaño">Tamaño de datos:</label>
+    <input type="number" id="tamaño" value="100" min="1" /><br /><br />
+
+    <label for="media">Media:</label>
+    <input type="number" id="media" value="0" /><br /><br />
+
+    <label for="desviacion">Desviación estándar:</label>
+    <input type="number" id="desviacion" value="1" min="0.01" /><br /><br />
+
+    <label for="cantidadDecimales">Cantidad de decimales:</label>
+    <input type="number" id="cantidadDecimales" value="2" min="0" /><br /><br />
+
+    <label><input type="checkbox" id="negativos" /> Permitir números negativos</label><br /><br />
+
+    <label><input type="checkbox" id="minimo" /> Aplicar valor mínimo</label>
+    <input type="number" id="minimoValor" style="display: none;" /><br /><br />
+
+    <label><input type="checkbox" id="maximo" /> Aplicar valor máximo</label>
+    <input type="number" id="maximoValor" style="display: none;" /><br /><br />
+
+    <button onclick="generarExcel()">Generar Excel</button>
+  </div>
+
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="js/generarExcel.js">
+  </script>
+</body>
+</html>
