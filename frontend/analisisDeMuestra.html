@@ -2,64 +2,76 @@
 <html>
 <head>
     <title>Análisis de Datos</title>
+    <link rel="stylesheet" href="./css/bien.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
-    <h1>Análisis de Datos</h1>
-    <input type="file" id="archivoExcel" accept=".xlsx, .xls"><br><br>
-    <label for="txtSheet">Nombre de la Hoja:</label>
-    <input type="text" id="txtSheet" value="Hoja1"><br><br>
+    <nav class="menu">
+        <div>
+            <a href="index.html" class="logo">
+                <img src="/frontend/img/logo.svg" alt="Logo" width="150px">
+            </a>
+            <h3>Herramientas</h3>
+        </div>
+    </nav>
+    <div class="contenido">
+        <h1>Análisis de Datos</h1>
+        <input type="file" id="archivoExcel" accept=".xlsx, .xls"><br><br>
+        <label for="txtSheet">Nombre de la Hoja:</label>
+        <input type="text" id="txtSheet" value="Hoja1"><br><br>
 
-    <label for="tipoAnalisis">Tipo de Análisis:</label>
-    <select id="tipoAnalisis">
-        <option value="proporcion">Proporción</option>
-        <option value="media">Media y Desviación Estándar</option>
-    </select><br><br>
+        <label for="tipoAnalisis">Tipo de Análisis:</label>
+        <select id="tipoAnalisis">
+            <option value="proporcion">Proporción</option>
+            <option value="media">Media y Desviación Estándar</option>
+        </select><br><br>
 
-    <div id="proporcionInputs">
-        <label for="txtNum">Número a comparar:</label>
-        <input type="number" id="txtNum"><br><br>
+        <div id="proporcionInputs">
+            <label for="txtNum">Número a comparar:</label>
+            <input type="number" id="txtNum"><br><br>
+        </div>
+
+        <button onclick="calcular()">Calcular</button><br><br>
+
+        <table id="resultadosProporcion" border="1" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Mayor</th>
+                    <th>Menor</th>
+                    <th>Mayor o Igual</th>
+                    <th>Menor o Igual</th>
+                    <th>Igual</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="mayor"></td>
+                    <td id="menor"></td>
+                    <td id="mayorIgual"></td>
+                    <td id="menorIgual"></td>
+                    <td id="igual"></td>
+                    <td id="total"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table id="resultadosMedia" border="1" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Media</th>
+                    <th>Desviación Estándar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="media"></td>
+                    <td id="desviacion"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <button onclick="calcular()">Calcular</button><br><br>
-
-    <table id="resultadosProporcion" border="1" style="display: none;">
-        <thead>
-            <tr>
-                <th>Mayor</th>
-                <th>Menor</th>
-                <th>Mayor o Igual</th>
-                <th>Menor o Igual</th>
-                <th>Igual</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td id="mayor"></td>
-                <td id="menor"></td>
-                <td id="mayorIgual"></td>
-                <td id="menorIgual"></td>
-                <td id="igual"></td>
-                <td id="total"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table id="resultadosMedia" border="1" style="display: none;">
-        <thead>
-            <tr>
-                <th>Media</th>
-                <th>Desviación Estándar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td id="media"></td>
-                <td id="desviacion"></td>
-            </tr>
-        </tbody>
-    </table>
-
     <script src="js/analisisDeMuestras.js"></script>
+    <script src="./js/menu.js"></script>
 </body>
 </html>
