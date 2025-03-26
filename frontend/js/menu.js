@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { href: "distribuciones.html", icon: "fas fa-chart-bar", text: "Distribuciones" },
         { href: "analisisEstadistico.html", icon: "fas fa-table", text: "Análisis Estadístico" }
     ];
+
+    
     
     const initialContent = nav.querySelector("div").outerHTML;
     nav.innerHTML = "";
@@ -31,4 +33,23 @@ document.addEventListener("DOMContentLoaded", function () {
         a.appendChild(text);
         nav.appendChild(a);
     });
+
+    const menuText = document.createElement("p");
+    menuText.textContent = "_____________________";
+
+    const menuText2 = document.createElement("p")
+    menuText2.textContent = "Menu Arata";
+    const br1 = document.createElement("br")
+    const br2 = document.createElement("br")
+    const br5 = document.createElement("br")
+    const br6 = document.createElement("br")
+    const br7 = document.createElement("br")
+    nav.appendChild(br1);
+    nav.appendChild(br2);
+    nav.appendChild(br5);
+    nav.appendChild(menuText);
+    nav.appendChild(menuText2);
+    nav.appendChild(br6);
+    nav.appendChild(br7);
+
 });
