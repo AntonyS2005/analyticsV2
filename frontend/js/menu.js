@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { href: "tamañoDeMuestra.html", icon: "fas fa-tachometer-alt", text: "Tamaño de Muestra" },
         { href: "calc_permutaciones.html", icon: "fas fa-chart-area", text: "Permutaciones" },
         { href: "distribuciones.html", icon: "fas fa-chart-bar", text: "Distribuciones" },
-        { href: "analisisEstadistico.html", icon: "fas fa-table", text: "Análisis Estadístico" }
+        { href: "analisisEstadistico.html", icon: "fas fa-table", text: "Análisis Estadístico" },
+        { href: "generarExcel.html", icon: "fas fa-table", text: "generar excel" }
     ];
 
     
