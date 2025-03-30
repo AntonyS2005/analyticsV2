@@ -1,3 +1,37 @@
+function esNumero(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+}
+
+function leerDatos(archivo, nombreHoja, callback) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const data = new Uint8Array(event.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheet = workbook.Sheets[nombreHoja];
+
+        if (!sheet) {
+            alert("La hoja especificada no existe.");
+            return;
+        }
+
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        let datos = [];
+
+        for (let fila of jsonData) {
+            for (let celda of fila) {
+                if (esNumero(celda)) {
+                    datos.push(parseFloat(celda));
+                }
+            }
+        }
+
+        datos.sort((a, b) => a - b);
+        callback(datos);
+    };
+    reader.readAsArrayBuffer(archivo);
+}
+
+
 async function getDatos() {
     const archivoInput = document.getElementById("archivoExcel");
     const archivo = archivoInput.files[0];
@@ -8,26 +42,11 @@ async function getDatos() {
         return null;
     }
 
-    const formData = new FormData();
-    formData.append("archivo", archivo);
-    formData.append("nombre_hoja", hoja);
-
-    try {
-        const respuesta = await fetch("http://127.0.0.1:8000/procesar_excel/", {
-            method: "POST",
-            body: formData,
+    return new Promise((resolve) => {
+        leerDatos(archivo, hoja, (datos) => {
+            resolve(datos);
         });
-
-        if (!respuesta.ok) {
-            throw new Error(`HTTP error! status: ${respuesta.status}`);
-        }
-
-        const datos = await respuesta.json();
-        return datos.datos;
-    } catch (error) {
-        console.error("Error al procesar el archivo:", error);
-        return null;
-    }
+    });
 }
 
 async function calcular() {

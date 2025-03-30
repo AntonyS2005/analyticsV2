@@ -5,6 +5,39 @@ btnCalc.addEventListener("click",()=>{
   
 });
 
+function esNumero(num) {
+  return !isNaN(parseFloat(num)) && isFinite(num);
+}
+
+function leerDatos(archivo, nombreHoja, callback) {
+  const reader = new FileReader();
+  reader.onload = function (event) {
+      const data = new Uint8Array(event.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[nombreHoja];
+
+      if (!sheet) {
+          alert("La hoja especificada no existe.");
+          return;
+      }
+
+      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+      let datos = [];
+
+      for (let fila of jsonData) {
+          for (let celda of fila) {
+              if (esNumero(celda)) {
+                  datos.push(parseFloat(celda));
+              }
+          }
+      }
+
+      datos.sort((a, b) => a - b);
+      callback(datos);
+  };
+  reader.readAsArrayBuffer(archivo);
+}
+
 
 async function procesarArchivo() {
   const archivoInput = document.getElementById("archivoExcel");
@@ -12,23 +45,11 @@ async function procesarArchivo() {
   const hoja = document.getElementById("txtSheet").value;
 
   if (archivo) {
-      const formData = new FormData();
-      formData.append("archivo", archivo);
-      formData.append("nombre_hoja", hoja);
-
       try {
-          const respuesta = await fetch("http://127.0.0.1:8000/procesar_excel/", {
-              method: "POST",
-              body: formData,
+          leerDatos(archivo, hoja, (datos) => {
+              console.log("Datos leídos:", datos); // Acceder al array de datos
+              llamarAnalisis(datos); // Pasar el array a llamarAnalisis
           });
-
-          if (!respuesta.ok) {
-              throw new Error(`HTTP error! status: ${respuesta.status}`);
-          }
-
-          const datos = await respuesta.json(); // Obtener la respuesta JSON
-          console.log("Datos leídos:", datos.datos); // Acceder al array de datos
-          llamarAnalisis(datos.datos); // Pasar el array a llamarAnalisis
       } catch (error) {
           console.error("Error al procesar el archivo:", error);
       }
@@ -36,6 +57,7 @@ async function procesarArchivo() {
       console.error("No se seleccionó un archivo.");
   }
 }
+
 
 
 function llamarAnalisis(datos){
