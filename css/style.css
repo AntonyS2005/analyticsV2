@@ -68,7 +68,7 @@ body {
       rgba(5, 30, 0, 0.684) 30%,
       rgba(2, 96, 0, 0.852)
   ), 
-  url("../frontend/img/fondo2.jpg");
+  url(".. img/fondo2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
@@ -168,7 +168,7 @@ body {
       rgba(23, 23, 23, 0.74) 30%,
       rgba(9, 160, 6, 0.7)
   ), 
-  url("../frontend/img/fondo.jpg");
+  url(".. img/fondo.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
