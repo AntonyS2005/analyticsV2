@@ -1,9 +1,13 @@
 document.getElementById("minimo").addEventListener("change", function () {
-  document.getElementById("minimoValor").style.display = this.checked ? "inline" : "none";
+  document.getElementById("minimoValor").style.display = this.checked
+    ? "inline"
+    : "none";
 });
 
 document.getElementById("maximo").addEventListener("change", function () {
-  document.getElementById("maximoValor").style.display = this.checked ? "inline" : "none";
+  document.getElementById("maximoValor").style.display = this.checked
+    ? "inline"
+    : "none";
 });
 
 function generarNormal(media, desviacion) {
@@ -20,11 +24,18 @@ function generarExcel() {
   const negativos = document.getElementById("negativos").checked;
   const minimo = document.getElementById("minimo").checked;
   const maximo = document.getElementById("maximo").checked;
-  const minimoValor = minimo ? parseFloat(document.getElementById("minimoValor").value) : -Infinity;
-  const maximoValor = maximo ? parseFloat(document.getElementById("maximoValor").value) : Infinity;
-  const cantidadDecimales = Math.max(0, parseInt(document.getElementById("cantidadDecimales").value));
+  const minimoValor = minimo
+    ? parseFloat(document.getElementById("minimoValor").value)
+    : -Infinity;
+  const maximoValor = maximo
+    ? parseFloat(document.getElementById("maximoValor").value)
+    : Infinity;
+  const cantidadDecimales = Math.max(
+    0,
+    parseInt(document.getElementById("cantidadDecimales").value)
+  );
 
-  const datos = [['']]; // Primera fila vacía
+  const datos = [[""]]; // Primera fila vacía
 
   for (let i = 0; i < tamaño; i++) {
     let valor;
@@ -52,6 +63,7 @@ function generarExcel() {
 }
 
 // Agregar la librería xlsx.js
-const script = document.createElement('script');
-script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+const script = document.createElement("script");
+script.src =
+  "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
 document.head.appendChild(script);
