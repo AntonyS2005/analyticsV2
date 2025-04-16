@@ -32,12 +32,15 @@ document.addEventListener("DOMContentLoaded", function () {
       icon: "fas fa-table",
       text: "Análisis Estadístico",
     },
-    { href: "generarExcel.html", icon: "fas fa-table", text: "generar excel" },
+    {
+      href: "generarExcel.html",
+      icon: "fas fa-table",
+      text: "generar excel",
+    },
   ];
 
   const initialContent = nav.querySelector("div").outerHTML;
   nav.innerHTML = "";
-
   nav.innerHTML = initialContent;
 
   menuItems.forEach((item) => {
@@ -58,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const menuText = document.createElement("p");
   menuText.textContent = "_____________________";
-
   const menuText2 = document.createElement("p");
   menuText2.textContent = "Menu Arata";
   const br1 = document.createElement("br");
@@ -73,4 +75,59 @@ document.addEventListener("DOMContentLoaded", function () {
   nav.appendChild(menuText2);
   nav.appendChild(br6);
   nav.appendChild(br7);
+
+  // Crear switch de tema con persistencia
+  const themeContainer = document.createElement("div");
+  themeContainer.style.marginTop = "auto";
+  themeContainer.style.padding = "20px";
+  themeContainer.style.textAlign = "center";
+
+  const label = document.createElement("label");
+  label.textContent = "Tema Claro";
+  label.style.display = "block";
+  label.style.marginBottom = "10px";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.style.transform = "scale(1.2)";
+
+  // Función para aplicar el tema y guardarlo en localStorage
+  function aplicarTema(theme) {
+    if (theme === "light") {
+      document.body.classList.add("tema-claro");
+      checkbox.checked = true;
+    } else {
+      document.body.classList.remove("tema-claro");
+      checkbox.checked = false;
+    }
+    localStorage.setItem("theme", theme);
+  }
+
+  // Al cargar la página, se carga el tema guardado o se detecta el tema del sistema
+  let savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    aplicarTema(savedTheme);
+  } else {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      aplicarTema("dark");
+    } else {
+      aplicarTema("light");
+    }
+  }
+
+  // Al cambiar el switch se guarda la preferencia
+  checkbox.addEventListener("change", function () {
+    if (checkbox.checked) {
+      aplicarTema("light");
+    } else {
+      aplicarTema("dark");
+    }
+  });
+
+  themeContainer.appendChild(label);
+  themeContainer.appendChild(checkbox);
+  nav.appendChild(themeContainer);
 });
