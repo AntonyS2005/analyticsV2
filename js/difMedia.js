@@ -75,7 +75,7 @@ export function pruebaProporcion(p, n, x, nc) {
   const sE = Math.sqrt(Math.abs((p * (1 - p)) / n));
   const zC = (proMues - p) / sE;
   nc /= 100;
-  z = invNormEstand(nc);
+  let z = invNormEstand(nc);
   return {
     z,
     zC,
