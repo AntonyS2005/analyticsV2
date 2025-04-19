@@ -82,16 +82,19 @@ export function pruebaProporcion(p, n, x, nc) {
   };
 }
 export function pruebaDiferenciaProporciones(n1, n2, x1, x2, nc) {
-  const proMues1 = x1 / n1;
-  const proMues2 = x2 / n2;
+  const proMues1 = (x1 / n1).toFixed(3);
+  const proMues2 = x2 / n2.toFixed(3);
   nc /= 100;
-  const difPro = proMues1 - proMues2;
-  const proCon = (x1 + x2) / (n1 + n2);
-  const sE = Math.sqrt(proCon * (1 * proCon) * (1 / n1 + 1 / n2));
-  const estaPru = difPro / sE;
-  const z = Math.abs(invNormEstand((1 - nc) / 2));
+  const difPro = (proMues1 - proMues2).toFixed(3);
+  const proCon = ((x1 + x2) / (n1 + n2)).toFixed(3);
+  const sE = (Math.sqrt(proCon * (1 - proCon) * (1 / n1 + 1 / n2))).toFixed(3);
+  const estaPru = (difPro / sE).toFixed(3);
+  const z = (Math.abs(invNormEstand((1 - nc) / 2))).toFixed(3);
+  return {
+    z,
+    zC: estaPru,
+  };
 }
-
 
 function calcularZAlpha(nivelConfianza, nivelSignificancia) {
   return invNormEstand(nivelConfianza + nivelSignificancia / 2);
