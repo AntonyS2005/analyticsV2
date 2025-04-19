@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>plantilla</title>
+    <link rel="stylesheet" href="./css/bien.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="menu">
+      <div>
+        <a href="index.html" class="logo">
+          <img src=" img/logo.svg" alt="Logo" width="150px" />
+        </a>
+        <h3>Herramientas</h3>
+      </div>
+    </nav>
+
+    <div class="contenido">
+      <h1>hipotesis por media</h1>
+      <select name="" id="selectOpcion">
+        <option value="">Selecciona una opcion</option>
+        <option value="medCuaT">media con Cuasidesviacion Tstudent</option>
+        <option value="medDesv">media con desviacion</option>
+        <option value="medCua">media con Cuasidesviacion</option>
+      </select>
+
+      <div id="contenedorInputs"></div>
+      <div id="contenedorResultados"></div>
+    </div>
+
+    <script src="js/menu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.5/jstat.min.js"></script>
-    <script src="js/hipMedia.js"></script>
-</body>
+    <script type="module" src="js/hipMediaUi.js"></script>
+  </body>
 </html>

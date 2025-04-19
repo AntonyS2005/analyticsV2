@@ -1,11 +1,18 @@
-function medConDes(medMues, desv, medPob, tamMuestra, nivelSignificancia) {
+export function medConDes(
+  medMues,
+  desv,
+  medPob,
+  tamMuestra,
+  nivelSignificancia
+) {
   nivelSignificancia /= 100;
   const z = invNormEstand(nivelSignificancia);
-  eP = (medMues - medPob) / (desv / Math.sqrt(tamMuestra));
-  xC = (z * desv) / Math.sqrt(tamMuestra) + medPob;
+  const eP = (medMues - medPob) / (desv / Math.sqrt(tamMuestra));
+  const xC = (z * desv) / Math.sqrt(tamMuestra) + medPob;
+  return { eP: eP, xC: xC, z: z };
 }
 
-function medSinDesDisT(
+export function medSinDesDisT(
   medMues,
   cuasiDesv,
   medPob,
@@ -13,9 +20,26 @@ function medSinDesDisT(
   nivelSignificancia
 ) {
   nivelSignificancia /= 100;
-  const t = jStat.studentt.inv(nivelSignificancia, tamMuestra - 1);
-  eP = (medMues - medPob) / (cuasiDesv / Math.sqrt(tamMuestra));
-  xC = (t * cuasiDesv) / Math.sqrt(tamMuestra) + medPob;
+  const gradosLibertad = tamMuestra - 1;
+  const tamMuestraSqrt = Math.sqrt(tamMuestra);
+  const t = jStat.studentt.inv(nivelSignificancia, gradosLibertad);
+  const eP = (medMues - medPob) / (cuasiDesv / Math.sqrt(tamMuestra));
+  const xC = (t * cuasiDesv) / Math.sqrt(tamMuestra) + medPob;
+  return { eP: eP, xC: xC, t: t };
+}
+
+export function medSinDes(
+  medMues,
+  cuasiDesv,
+  medPob,
+  tamMuestra,
+  nivelSignificancia
+) {
+  nivelSignificancia /= 100;
+  const z = invNormEstand(nivelSignificancia);
+  const eP = (medMues - medPob) / (cuasiDesv / Math.sqrt(tamMuestra));
+  const xC = (z * cuasiDesv) / Math.sqrt(tamMuestra) + medPob;
+  return { eP: eP, xC: xC, z: z };
 }
 
 function invNormEstand(p) {

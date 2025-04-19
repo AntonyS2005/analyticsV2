@@ -1,4 +1,4 @@
-function calcularConVarianzasConocidas(
+export function calcularConVarianzasConocidas(
   tamanoMuestra1,
   tamanoMuestra2,
   mediaMuestra1,
@@ -32,7 +32,7 @@ function calcularConVarianzasConocidas(
   };
 }
 
-function calcularSinVarianzasConocidas(
+export function calcularSinVarianzasConocidas(
   tamanoMuestra1,
   tamanoMuestra2,
   mediaMuestra1,
@@ -69,7 +69,7 @@ function calcularSinVarianzasConocidas(
     estadisticoT,
   };
 }
-function pruebaProporcion(p, n, x, nc) {
+export function pruebaProporcion(p, n, x, nc) {
   p /= 100;
   const proMues = x / n;
   const sE = Math.sqrt(Math.abs((p * (1 - p)) / n));
@@ -81,18 +81,17 @@ function pruebaProporcion(p, n, x, nc) {
     zC,
   };
 }
-function pruebaDiferenciaProporciones(n1, n2, x1, x2, nc) {
+export function pruebaDiferenciaProporciones(n1, n2, x1, x2, nc) {
   const proMues1 = x1 / n1;
   const proMues2 = x2 / n2;
   nc /= 100;
   const difPro = proMues1 - proMues2;
-  const proCon = (x1 + x2) / (n1 + n2)
-  const sE = Math.sqrt((proCon*(1*proCon)*(1/n1 + 1/n2)))
+  const proCon = (x1 + x2) / (n1 + n2);
+  const sE = Math.sqrt(proCon * (1 * proCon) * (1 / n1 + 1 / n2));
   const estaPru = difPro / sE;
-  const z = Math.abs(invNormEstand((1-nc)/2));
-  }
+  const z = Math.abs(invNormEstand((1 - nc) / 2));
+}
 
-  const prueba = pruebaDiferenciaProporciones(500,250,450,200,95);
 
 function calcularZAlpha(nivelConfianza, nivelSignificancia) {
   return invNormEstand(nivelConfianza + nivelSignificancia / 2);

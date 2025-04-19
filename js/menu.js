@@ -37,6 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
       icon: "fas fa-table",
       text: "generar excel",
     },
+    {
+      href: "hipMedia.html",
+      icon: "fas fa-chart-area",
+      text: "Hipotesis de Media",
+    },
+    {
+      href: "difMedia.html",
+      icon: "fas fa-chart-area",
+      text: "Hipotesis de Diferencia de Medias",
+    },
   ];
 
   const initialContent = nav.querySelector("div").outerHTML;
