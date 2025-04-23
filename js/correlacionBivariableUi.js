@@ -9,3 +9,7 @@ document.getElementById("excelFile").addEventListener("change", async (e) => {
   console.log("X:", x);
   console.log("Y:", y);
 });
+
+document.getElementById("calculateButton").addEventListener("click", () => {
+
+});
