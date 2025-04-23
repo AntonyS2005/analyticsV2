@@ -1,11 +1,4 @@
-let arrayX = [];
-let arrayY = [];
-let arrayLogX = [];
 
-function calcularLog(data) {
-  const logData = data.map((value) => Math.log(value));
-  return logData;
-}
 function calcularPromedio(data) {
   const suma = data.reduce((acc, val) => acc + val, 0);
   return suma / data.length;
@@ -130,3 +123,61 @@ function calProYlineal(a, b, y) {
   return a + b * y;
 }
 
+export function calcularDistribucionLogaritmica(x, y) {
+  let arrayLogy = [];
+  let arrayDx = [];
+  let arrayDlogY = [];
+  let arrayDxPow2 = [];
+  let arrayDlogYpow2 = [];
+  let arrayDxDlogY = [];
+  const nDatos = x.length;
+  const xMedia = calcularPromedio(x);
+  const yMedia = calcularPromedio(y);
+  for (let i = 0; i < nDatos; i++){
+    arrayLogy.push(Math.log(y[i]));
+    arrayDx.push(x[i] - xMedia);
+    arrayDlogY.push(arrayLogy[i] - yMedia);
+    arrayDxPow2.push(arrayDx[i] ** 2);
+    arrayDlogYpow2.push(arrayDlogY[i] ** 2);
+    arrayDxDlogY.push(arrayDx[i] * arrayDlogY[i]);
+  }
+  const totalDx = calcularTotales(arrayDx);
+  const totalDlogY = calcularTotales(arrayDlogY);
+  const totalDxPow2 = calcularTotales(arrayDxPow2);
+  const totalDlogYpow2 = calcularTotales(arrayDlogYpow2);
+  const totalDxDlogY = calcularTotales(arrayDxDlogY);
+  const sx = calcularSx(totalDxPow2, nDatos);
+  const sy = calcularSy(totalDlogYpow2, nDatos);
+  const sxy = calcularSXY(totalDxDlogY, nDatos);
+  const r = calcularR(sxy, sx, sy);
+  const b = calcularB(sxy, sx);
+  const a = calcularA(yMedia, b, xMedia);
+  const ecuacionRegresion = `${a.toFixed(2)} ${b < 0 ? "-" : "+"} ${Math.abs(
+    b
+  ).toFixed(2)}ln(x)`;
+  return {
+    x,
+    y,
+    xMedia,
+    yMedia,
+    nDatos,
+    arrayLogy,
+    arrayDx,
+    arrayDlogY,
+    arrayDxPow2,
+    arrayDlogYpow2,
+    arrayDxDlogY,
+    totalDx,
+    totalDlogY,
+    totalDxPow2,
+    totalDlogYpow2,
+    totalDxDlogY,
+    sx,
+    sy,
+    sxy,
+    r,
+    b,
+    a,
+    ecuacionRegresion,
+  };
+}
