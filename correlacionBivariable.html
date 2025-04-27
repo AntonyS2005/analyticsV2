@@ -1,38 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>plantilla</title>
+    <title>Análisis de Correlación y Regresión</title>
     <link rel="stylesheet" href="./css/bien.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
+    <style>
+      /* estilos mínimos para la demo */
+      .controls {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+      }
+      .controls > * {
+        flex: 1;
+        min-width: 200px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      .highlight {
+        background: #e0ffe0;
+      }
+    </style>
   </head>
   <body>
     <nav class="menu">
       <div>
         <a href="index.html" class="logo">
-          <img src=" img/logo.svg" alt="Logo" width="150px" />
+          <img src="img/logo.svg" alt="Logo" width="150" />
         </a>
         <h3>Herramientas</h3>
       </div>
     </nav>
 
-    <div class="contenido">
-      <h1>Analisis de correlacion y regresion bivariable</h1>
-      <input type="file" id="excelFile" accept=".xlsx, .xls" />
-      <select name="" id="">
-        <option value="">Seleccione una opcion</option>
-        <option value="lineal">Lineal</option>
-        <option value="exponencial">Exponencial</option>
-        <option value="logaritmica">Logaritmica</option>
-      </select>
+    <main class="contenido">
+      <h1>Análisis de Correlación y Regresión Bivariada</h1>
 
-      <div id="divInputs"></div>
-      <div id="divRespuestas"></div>
-    </div>
+      <div class="controls">
+        <!-- 1. File upload -->
+        <div>
+          <label for="excelFile">Cargar Excel:</label><br />
+          <input type="file" id="excelFile" accept=".xlsx, .xls" />
+        </div>
+
+        <!-- 2. Botón de cálculo -->
+        <div>
+          <label>&nbsp;</label><br />
+          <button id="calculateButton" disabled>
+            <i class="fas fa-calculator"></i> Calcular
+          </button>
+        </div>
+
+        <!-- 3. Selector de regresión a visualizar -->
+        <div>
+          <label for="regressionSelect">Ver regresión:</label><br />
+          <select id="regressionSelect" disabled>
+            <option value="linear">Lineal</option>
+            <option value="exponential">Exponencial</option>
+            <option value="logarithmic">Logarítmica</option>
+          </select>
+        </div>
+
+        <!-- 4. Predicción futura -->
+        <div>
+          <label for="predictX">Predecir Y para X =</label><br />
+          <input type="number" id="predictX" step="any" disabled />
+          <button id="predictButton" disabled>
+            <i class="fas fa-chart-line"></i> Predecir
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. Punto fuerte (mejor R) -->
+      <div id="bestFit" style="margin: 1rem 0; font-weight: bold"></div>
+
+      <!-- 6. Área de resultados -->
+      <div id="resultsArea"></div>
+    </main>
+
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <script src="js/menu.js"></script>
     <script type="module" src="js/correlacionBivariableUi.js"></script>

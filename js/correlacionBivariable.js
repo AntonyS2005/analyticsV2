@@ -1,4 +1,3 @@
-
 function calcularPromedio(data) {
   const suma = data.reduce((acc, val) => acc + val, 0);
   return suma / data.length;
@@ -89,9 +88,9 @@ export function calcularDistribucionLineal(x, y) {
   const r = calcularR(sxy, sx, sy);
   const b = calcularB(sxy, sx);
   const a = calcularA(yMedia, b, xMedia);
-  const ecuacionRegresion = `${a.toFixed(2)} ${b < 0 ? "-" : "+"} ${Math.abs(
-    b
-  ).toFixed(2)}x`;
+  const ecuacionRegresion = `${Number(a).toFixed(2)} ${
+    b < 0 ? "-" : "+"
+  } ${Math.abs(b).toFixed(2)}x`;
 
   return {
     x,
@@ -123,7 +122,7 @@ function calProYlineal(a, b, y) {
   return a + b * y;
 }
 
-export function calcularDistribucionLogaritmica(x, y) {
+export function calcularDistribucionExponencial(x, y) {
   let arrayLogy = [];
   let arrayDx = [];
   let arrayDlogY = [];
@@ -133,7 +132,7 @@ export function calcularDistribucionLogaritmica(x, y) {
   const nDatos = x.length;
   const xMedia = calcularPromedio(x);
   const yMedia = calcularPromedio(y);
-  for (let i = 0; i < nDatos; i++){
+  for (let i = 0; i < nDatos; i++) {
     arrayLogy.push(Math.log(y[i]));
     arrayDx.push(x[i] - xMedia);
     arrayDlogY.push(arrayLogy[i] - yMedia);
@@ -152,7 +151,7 @@ export function calcularDistribucionLogaritmica(x, y) {
   const r = calcularR(sxy, sx, sy);
   const b = calcularB(sxy, sx);
   const a = calcularA(yMedia, b, xMedia);
-  const ecuacionRegresion = `${a.toFixed(2)} ${b < 0 ? "-" : "+"} ${Math.abs(
+  const ecuacionRegresion = `${Number(a).toFixed(2)} ${b < 0 ? "-" : "+"} ${Math.abs(
     b
   ).toFixed(2)}ln(x)`;
   return {
@@ -180,4 +179,84 @@ export function calcularDistribucionLogaritmica(x, y) {
     a,
     ecuacionRegresion,
   };
+}
+export function calcularFuturaYExponencial(a, b, x) {
+  const resultadoExponencial = Math.exp(a) * Math.exp(b * x);
+  const resultadoRedondeado = Math.round(resultadoExponencial);
+  return resultadoRedondeado;
+}
+
+export function calcularDistribucionLogaritmica(x, y) {
+  let arrayLogx = [];
+  let arrayDy = [];
+  let arrayDlogX = [];
+  let arrayLogxPow2 = [];
+  let arrayDyPow2 = [];
+  let arrayDlogXy = [];
+
+  const nDatos = x.length;
+  const yMedia = calcularPromedio(y);
+
+  for (let i = 0; i < nDatos; i++) {
+    arrayLogx.push(Math.log(x[i]));
+  }
+
+  const xMedia = calcularPromedio(arrayDlogX);
+
+  for (let i = 0; i < nDatos; i++) {
+    arrayDy.push(y[i] - yMedia);
+    arrayDlogX.push(arrayLogx[i] - xMedia);
+    arrayLogxPow2.push(arrayLogx[i] ** 2);
+    arrayDyPow2.push(arrayDy[i] ** 2);
+    arrayDlogXy.push(arrayDlogX[i] * arrayDy[i]);
+  }
+
+  const totalLogx = calcularTotales(arrayLogx);
+  const totalDy = calcularTotales(arrayDy);
+  const totalLogxPow2 = calcularTotales(arrayLogxPow2);
+  const totalDyPow2 = calcularTotales(arrayDyPow2);
+  const totalDlogXy = calcularTotales(arrayDlogXy);
+
+  const sx = calcularSx(totalLogxPow2, nDatos);
+  const sy = calcularSy(totalDyPow2, nDatos);
+  const sxy = calcularSXY(totalDlogXy, nDatos);
+
+  const r = calcularR(sxy, sx, sy);
+  const b = calcularB(sxy, sx);
+  const a = calcularA(yMedia, b, xMedia);
+
+  const ecuacionRegresion = `${Number(a).toFixed(2)} ${b < 0 ? "-" : "+"} ${Math.abs(
+    b
+  ).toFixed(2)}ln(x)`;
+
+  return {
+    x,
+    y,
+    xMedia,
+    yMedia,
+    nDatos,
+    arrayLogx,
+    arrayDy,
+    arrayDlogX,
+    arrayLogxPow2,
+    arrayDyPow2,
+    arrayDlogXy,
+    totalLogx,
+    totalDy,
+    totalLogxPow2,
+    totalDyPow2,
+    totalDlogXy,
+    sx,
+    sy,
+    sxy,
+    r,
+    b,
+    a,
+    ecuacionRegresion,
+  };
+}
+
+export function calcularFuturaYLogaritmica(a, b, x) {
+  const resultadoLogaritmico = a + b * Math.log(x);
+  return resultadoLogaritmico.toFixed(2);
 }
