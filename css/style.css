@@ -348,7 +348,7 @@ textarea:focus {
   bottom: 150%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
+  background-color: #333333;
   color: white;
   padding: 6;
   font-size: 12px;
