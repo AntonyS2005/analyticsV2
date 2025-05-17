@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis de Regresión Multivariable</title>
+    <link rel="stylesheet" href="./css/bien.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.6/jstat.min.js"></script>
+  </head>
+  <body>
+    <nav class="menu">
+      <div>
+        <a href="index.html" class="logo">
+          <img src="img/logo.svg" alt="Logo" width="150px" />
+        </a>
+        <h3>Herramientas de Análisis</h3>
+      </div>
+    </nav>
+
+    <div class="contenido">
+      <h1>Análisis de Regresión Multivariable desde Excel</h1>
+
+      <div class="input-section">
+        <label for="excelFile">Seleccionar archivo Excel:</label>
+        <input type="file" id="excelFile" accept=".xlsx, .xls" />
+
+        <label for="useTitles">
+          <input type="checkbox" id="useTitles" /> La primera fila contiene
+          títulos
+        </label>
+      </div>
+
+      <div id="rawDataSection" style="display: none">
+        <h2>Datos Leídos</h2>
+        <div id="rawDataDisplay"></div>
+      </div>
+
+      <div id="initialResultsSection" style="display: none">
+        <h2>Resultados de la Regresión Inicial (p-valores)</h2>
+        <p>
+          Desmarca las variables que *no* deseas incluir en el análisis final
+          (p-valor > 0.05).
+        </p>
+        <div id="initialResultsDisplay"></div>
+        <button id="recalculateBtn" style="display: none">
+          Recalcular Regresión con Variables Seleccionadas
+        </button>
+      </div>
+
+      <div id="finalResultsSection" style="display: none">
+        <h2>Resultados de la Regresión Final</h2>
+        <div id="finalResultsDisplay"></div>
+        <div id="formulaDisplay"></div>
+      </div>
+
+      <div id="predictionSection" style="display: none">
+        <h2>Predicción de Nueva Venta/Estimación</h2>
+        <div id="predictionForm"></div>
+        <button id="predictBtn" style="display: none">
+          Realizar Predicción
+        </button>
+        <div id="predictionResult"></div>
+      </div>
+
+      <div id="errorMessages" style="color: red"></div>
+    </div>
+
+    <script src="js/correlacionMulti.js"></script>
+    <script src="js/menu.js"></script>
+  </body>
+</html>
