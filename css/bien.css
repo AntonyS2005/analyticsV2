@@ -221,3 +221,6 @@ label {
     max-width: 100px;
   }
 }
+#regressionResultsContainer {
+  margin-top: 35px;
+}

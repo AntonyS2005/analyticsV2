@@ -3,9 +3,7 @@ async function parseExcelFile(file) {
   const data = new Uint8Array(arrayBuffer);
   const workbook = XLSX.read(data, { type: "array" });
   const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-  const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-  return jsonData;
+  return XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
 }
 
 async function extractData(jsonData, useHeaders) {
@@ -21,16 +19,14 @@ async function extractData(jsonData, useHeaders) {
   });
 
   if (useHeaders) {
-    // First row contains titles
     headers = Xraw.shift();
-    Y.shift(); // remove header label from Y
+    Y.shift();
     if (Xraw[0].length < 2) {
       alert("No se puede hacer un análisis multivariable con una sola x");
       window.location.href = "correlacionBivariable.html";
       throw new Error("Redirigiendo a análisis bivariable");
     }
   } else {
-    // Generate generic x labels
     headers = Xraw[0].map((_, i) => `x${i + 1}`);
     if (Xraw[0].length < 2) {
       alert("No se puede hacer un análisis multivariable con una sola x");
@@ -75,12 +71,15 @@ async function performLinearRegression(Y, Xraw) {
 
 document.addEventListener("DOMContentLoaded", () => {
   let Y, Xraw, headers, finalCoef, finalP;
+  let signifIndices = [];
 
   document
     .getElementById("excelFileInput")
     .addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
       try {
-        const jsonData = await parseExcelFile(e.target.files[0]);
+        const jsonData = await parseExcelFile(file);
         const useHeaders = document.getElementById("headerCheckbox").checked;
         ({ Y, Xraw, headers } = await extractData(jsonData, useHeaders));
 
@@ -90,44 +89,63 @@ document.addEventListener("DOMContentLoaded", () => {
           Y.map((y, i) => [y, ...Xraw[i]])
         );
 
-        let res = await performLinearRegression(Y, Xraw);
+        const res = await performLinearRegression(Y, Xraw);
         finalCoef = res.coefficients;
         finalP = res.pValues;
+
+        signifIndices = headers
+          .map((h, i) => (finalP[i + 1] <= 0.05 ? i : -1))
+          .filter((i) => i >= 0);
+
         renderRegression("regressionResultsContainer", finalCoef, finalP, [
           "Intercept",
           ...headers,
         ]);
 
-        const toRemove = headers.filter((h, i) => finalP[i + 1] > 0.05);
-        if (toRemove.length) showRecalc(toRemove);
+        const nonSig = headers.filter((h, i) => finalP[i + 1] > 0.05);
+        if (nonSig.length) showRecalc(nonSig);
         else showPrediction(headers);
       } catch (err) {
-        if (err.message !== "Redirigiendo a análisis bivariable")
+        if (err.message !== "Redirigiendo a análisis bivariable") {
           alert(err.message);
+        }
       }
     });
 
   document
     .getElementById("recalculateButton")
     .addEventListener("click", async () => {
-      const kept = Array.from(
-        document.querySelectorAll("#recalcVars input:checked")
-      ).map((i) => i.value);
-      const idx = headers
-        .map((h, i) => (kept.includes(h) ? i : -1))
-        .filter((i) => i >= 0);
-      const Xf = Xraw.map((r) => idx.map((i) => r[i]));
-      const hdrs = idx.map((i) => headers[i]);
-      const res = await performLinearRegression(Y, Xf);
-      finalCoef = res.coefficients;
-      finalP = res.pValues;
-      renderRegression("regressionResultsContainer", finalCoef, finalP, [
-        "Intercept",
-        ...hdrs,
-      ]);
-      headers = hdrs;
-      document.getElementById("recalculationArea").style.display = "none";
-      showPrediction(headers);
+      try {
+        const keptNames = Array.from(
+          document.querySelectorAll("#recalcVars input:checked")
+        ).map((i) => i.value);
+
+        const keptNonSig = headers
+          .map((h, i) => (keptNames.includes(h) ? i : -1))
+          .filter((i) => i >= 0);
+
+        const finalIdx = [...signifIndices, ...keptNonSig].sort(
+          (a, b) => a - b
+        );
+
+        const Xf = Xraw.map((r) => finalIdx.map((i) => r[i]));
+        const hdrs = finalIdx.map((i) => headers[i]);
+
+        const res = await performLinearRegression(Y, Xf);
+        finalCoef = res.coefficients;
+        finalP = res.pValues;
+
+        renderRegression("regressionResultsContainer", finalCoef, finalP, [
+          "Intercept",
+          ...hdrs,
+        ]);
+
+        headers = hdrs;
+        document.getElementById("recalculationArea").style.display = "none";
+        showPrediction(headers);
+      } catch (err) {
+        alert(err.message);
+      }
     });
 
   document.getElementById("predictButton").addEventListener("click", () => {
@@ -135,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll("#predictionInputs input")
     ).map((i) => parseFloat(i.value) || 0);
     const formula = [
-      "Y = " + finalCoef[0].toFixed(4),
+      `Y = ${finalCoef[0].toFixed(4)}`,
       ...inputs.map((v, i) => `${finalCoef[i + 1].toFixed(4)}*x${i + 1}`),
     ].join(" + ");
     document.getElementById("predictionFormula").textContent = formula;
@@ -173,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     c.innerHTML = "";
     const tbl = document.createElement("table");
     const headerRow = tbl.insertRow();
-    ["Variable", "Coeficiente", "p-value"].forEach((t) => {
+    ["Variable", "Coeficiente", "p-value (%)"].forEach((t) => {
       const th = document.createElement("th");
       th.textContent = t;
       headerRow.appendChild(th);
@@ -182,13 +200,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const r = tbl.insertRow();
       r.insertCell().textContent = h;
       r.insertCell().textContent = coef[i].toFixed(4);
-      r.insertCell().textContent = pvals[i].toExponential(2);
+      r.insertCell().textContent = (pvals[i] * 100).toFixed(2) + "%";
     });
     c.appendChild(tbl);
   }
 
   function showRecalc(vars) {
-    document.getElementById("recalculationArea").style.display = "block";
+    const area = document.getElementById("recalculationArea");
+    area.style.display = "block";
     const container = document.getElementById("recalcVars");
     container.innerHTML = "";
     vars.forEach((v) => {
@@ -208,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("predictionArea").style.display = "block";
     const container = document.getElementById("predictionInputs");
     container.innerHTML = "";
-    vars.forEach((v, i) => {
+    vars.forEach((v) => {
       const lbl = document.createElement("label");
       lbl.textContent = `${v}: `;
       const inp = document.createElement("input");
