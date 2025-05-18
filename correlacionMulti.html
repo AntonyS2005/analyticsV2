@@ -3,75 +3,273 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Análisis de Regresión Multivariable</title>
-    <link rel="stylesheet" href="./css/bien.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
+    <title>Regresión Lineal Múltiple desde Excel</title>
+    <!-- CDN de librerías -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.6/jstat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      #recalculationArea,
+      #predictionArea {
+        margin-top: 1rem;
+        display: none;
+      }
+      .hidden {
+        display: none;
+      }
+      .var-checkbox {
+        margin-right: 0.5rem;
+      }
+      .section {
+        margin-top: 2rem;
+      }
+    </style>
   </head>
   <body>
-    <nav class="menu">
-      <div>
-        <a href="index.html" class="logo">
-          <img src="img/logo.svg" alt="Logo" width="150px" />
-        </a>
-        <h3>Herramientas de Análisis</h3>
-      </div>
-    </nav>
+    <h1>Regresión Lineal Múltiple</h1>
 
-    <div class="contenido">
-      <h1>Análisis de Regresión Multivariable desde Excel</h1>
+    <label
+      ><input type="checkbox" id="headerCheckbox" /> Usar primera fila como
+      encabezados</label
+    ><br /><br />
+    <input type="file" id="excelFileInput" accept=".xlsx" />
 
-      <div class="input-section">
-        <label for="excelFile">Seleccionar archivo Excel:</label>
-        <input type="file" id="excelFile" accept=".xlsx, .xls" />
+    <div id="rawDataContainer" class="section"></div>
+    <div id="regressionResultsContainer" class="section"></div>
 
-        <label for="useTitles">
-          <input type="checkbox" id="useTitles" /> La primera fila contiene
-          títulos
-        </label>
-      </div>
-
-      <div id="rawDataSection" style="display: none">
-        <h2>Datos Leídos</h2>
-        <div id="rawDataDisplay"></div>
-      </div>
-
-      <div id="initialResultsSection" style="display: none">
-        <h2>Resultados de la Regresión Inicial (p-valores)</h2>
-        <p>
-          Desmarca las variables que *no* deseas incluir en el análisis final
-          (p-valor > 0.05).
-        </p>
-        <div id="initialResultsDisplay"></div>
-        <button id="recalculateBtn" style="display: none">
-          Recalcular Regresión con Variables Seleccionadas
-        </button>
-      </div>
-
-      <div id="finalResultsSection" style="display: none">
-        <h2>Resultados de la Regresión Final</h2>
-        <div id="finalResultsDisplay"></div>
-        <div id="formulaDisplay"></div>
-      </div>
-
-      <div id="predictionSection" style="display: none">
-        <h2>Predicción de Nueva Venta/Estimación</h2>
-        <div id="predictionForm"></div>
-        <button id="predictBtn" style="display: none">
-          Realizar Predicción
-        </button>
-        <div id="predictionResult"></div>
-      </div>
-
-      <div id="errorMessages" style="color: red"></div>
+    <div id="recalculationArea" class="section">
+      <h2>Variables con p-value > 0.05</h2>
+      <div id="recalcVars"></div>
+      <button id="recalculateButton">Recalcular</button>
     </div>
 
-    <script src="js/correlacionMulti.js"></script>
-    <script src="js/menu.js"></script>
+    <div id="predictionArea" class="section">
+      <h2>Predicción</h2>
+      <div id="predictionInputs"></div>
+      <button id="predictButton">Predecir</button>
+      <p id="predictionFormula"></p>
+      <p id="predictionResult"></p>
+    </div>
+
+    <script>
+      async function parseExcelFile(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const data = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, { type: "array" });
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+        const Y = [],
+          Xraw = [];
+        jsonData.forEach((row) => {
+          if (row.length && row[0] != null) {
+            Y.push(row[0]);
+            Xraw.push(row.slice(1).filter((cell) => cell != null));
+          }
+        });
+        return { Y, Xraw };
+      }
+
+      async function performLinearRegression(Y, Xraw) {
+        if (!Y.length || !Xraw.length || !Xraw[0].length)
+          throw new Error("Datos insuficientes para realizar la regresión.");
+        const n = Y.length;
+        const p = Xraw[0].length + 1;
+        const X = Xraw.map((row) => [1, ...row]);
+        const Xt = math.transpose(X);
+        const XtX = math.multiply(Xt, X);
+        const XtX_inv = math.inv(XtX);
+        const XtY = math.multiply(Xt, Y);
+        const beta = math.multiply(XtX_inv, XtY);
+
+        const yHat = math.multiply(X, beta);
+        const residuals = math.subtract(Y, yHat);
+        const s2 = math.sum(math.dotPow(residuals, 2)) / (n - p);
+
+        const covB = math.multiply(s2, XtX_inv);
+        const se = covB.map((row, i) => Math.sqrt(row[i]));
+
+        const tStats = beta.map((b, i) => b / se[i]);
+        const df = n - p;
+        const pValues = tStats.map(
+          (t) => 2 * (1 - jStat.studentt.cdf(Math.abs(t), df))
+        );
+
+        return { coefficients: beta, pValues };
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        let Y, Xraw, headers, finalCoef, finalP;
+
+        document
+          .getElementById("excelFileInput")
+          .addEventListener("change", async (e) => {
+            try {
+              ({ Y, Xraw } = await parseExcelFile(e.target.files[0]));
+              const useHeaders =
+                document.getElementById("headerCheckbox").checked;
+              if (useHeaders) {
+                headers = Xraw.shift();
+              } else {
+                headers = Xraw[0].map((_, i) => `x${i + 1}`);
+              }
+
+              renderTable(
+                "rawDataContainer",
+                ["Y", ...headers],
+                Y.map((y, i) => [y, ...Xraw[i]])
+              );
+
+              let res = await performLinearRegression(Y, Xraw);
+              finalCoef = res.coefficients;
+              finalP = res.pValues;
+              renderRegression(
+                "regressionResultsContainer",
+                finalCoef,
+                finalP,
+                ["Intercept", ...headers]
+              );
+
+              const toRemove = headers.filter((h, i) => finalP[i + 1] > 0.05);
+              if (toRemove.length) showRecalc(toRemove);
+              else showPrediction(headers);
+            } catch (err) {
+              alert(err.message);
+            }
+          });
+
+        document
+          .getElementById("recalculateButton")
+          .addEventListener("click", async () => {
+            const kept = Array.from(
+              document.querySelectorAll("#recalcVars input:checked")
+            ).map((i) => i.value);
+            const idx = headers
+              .map((h, i) => (kept.includes(h) ? i : -1))
+              .filter((i) => i >= 0);
+            const Xf = Xraw.map((r) => idx.map((i) => r[i]));
+            const hdrs = idx.map((i) => headers[i]);
+            const res = await performLinearRegression(Y, Xf);
+            finalCoef = res.coefficients;
+            finalP = res.pValues;
+            renderRegression("regressionResultsContainer", finalCoef, finalP, [
+              "Intercept",
+              ...hdrs,
+            ]);
+            headers = hdrs;
+            document.getElementById("recalculationArea").style.display = "none";
+            showPrediction(headers);
+          });
+
+        document
+          .getElementById("predictButton")
+          .addEventListener("click", () => {
+            const inputs = Array.from(
+              document.querySelectorAll("#predictionInputs input")
+            ).map((i) => parseFloat(i.value) || 0);
+            const formula = [
+              "Y = " + finalCoef[0].toFixed(4),
+              ...inputs.map(
+                (v, i) => `${finalCoef[i + 1].toFixed(4)}*x${i + 1}`
+              ),
+            ].join(" + ");
+            document.getElementById("predictionFormula").textContent = formula;
+            const yPred = finalCoef.reduce(
+              (sum, b, i) => sum + b * (i ? inputs[i - 1] : 1),
+              0
+            );
+            document.getElementById(
+              "predictionResult"
+            ).textContent = `Y predicho: ${yPred.toFixed(4)}`;
+          });
+
+        function renderTable(elId, heads, data) {
+          const c = document.getElementById(elId);
+          c.innerHTML = "";
+          const tbl = document.createElement("table");
+          const thead = tbl.insertRow();
+          heads.forEach((h) => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            thead.appendChild(th);
+          });
+          data.forEach((row) => {
+            const r = tbl.insertRow();
+            row.forEach((cel) => {
+              const td = r.insertCell();
+              td.textContent = cel;
+            });
+          });
+          c.appendChild(tbl);
+        }
+
+        function renderRegression(elId, coef, pvals, heads) {
+          const c = document.getElementById(elId);
+          c.innerHTML = "";
+          const tbl = document.createElement("table");
+          const headerRow = tbl.insertRow();
+          ["Variable", "Coeficiente", "p-value"].forEach((t) => {
+            const th = document.createElement("th");
+            th.textContent = t;
+            headerRow.appendChild(th);
+          });
+          heads.forEach((h, i) => {
+            const r = tbl.insertRow();
+            r.insertCell().textContent = h;
+            r.insertCell().textContent = coef[i].toFixed(4);
+            r.insertCell().textContent = pvals[i].toExponential(2);
+          });
+          c.appendChild(tbl);
+        }
+
+        function showRecalc(vars) {
+          document.getElementById("recalculationArea").style.display = "block";
+          const container = document.getElementById("recalcVars");
+          container.innerHTML = "";
+          vars.forEach((v) => {
+            const lbl = document.createElement("label");
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.checked = true;
+            cb.value = v;
+            lbl.appendChild(cb);
+            lbl.append(` ${v}`);
+            container.appendChild(lbl);
+            container.appendChild(document.createElement("br"));
+          });
+        }
+
+        function showPrediction(vars) {
+          document.getElementById("predictionArea").style.display = "block";
+          const container = document.getElementById("predictionInputs");
+          container.innerHTML = "";
+          vars.forEach((v, i) => {
+            const lbl = document.createElement("label");
+            lbl.textContent = `${v}: `;
+            const inp = document.createElement("input");
+            inp.type = "number";
+            inp.step = "any";
+            lbl.appendChild(inp);
+            container.appendChild(lbl);
+            container.appendChild(document.createElement("br"));
+          });
+        }
+      });
+    </script>
   </body>
 </html>

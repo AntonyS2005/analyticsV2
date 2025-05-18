@@ -676,11 +676,11 @@ document.addEventListener("DOMContentLoaded", () => {
           : `X${originalXIndex}`;
 
       formHTML += `
-                  <div class="prediction-input-group">
-                      <label for="predict_x${originalXIndex}">${variableName}:</label>
-                      <input type="number" step="any" id="predict_x${originalXIndex}" class="prediction-input" data-original-index="${originalXIndex}">
-                  </div>
-              `;
+                    <div class="prediction-input-group">
+                        <label for="predict_x${originalXIndex}">${variableName}:</label>
+                        <input type="number" step="any" id="predict_x${originalXIndex}" class="prediction-input" data-original-index="${originalXIndex}">
+                    </div>
+                `;
     }
 
     predictionForm.innerHTML = formHTML;
