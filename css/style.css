@@ -400,3 +400,22 @@ textarea:focus {
     margin: 10px 0;
   }
 }
+
+.btn-ayuda {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #00bb00;
+    width: 150px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+  }
+
+  .btn-ayuda:hover {
+    background-color: #019b01;
+  }
