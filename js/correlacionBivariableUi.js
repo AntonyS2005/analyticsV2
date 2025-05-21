@@ -96,7 +96,7 @@ function renderTable(type) {
     <table>
       <thead>
         <tr>
-          <th>i</th><th>x</th><th>y</th>
+          <th>No.</th><th>x</th><th>y</th>
           ${
             type === "linear"
               ? `<th>dx</th><th>dy</th><th>dx²</th><th>dy²</th><th>dx·dy</th>`
@@ -104,12 +104,12 @@ function renderTable(type) {
           }
           ${
             type === "exponential"
-              ? `<th>ln(y)</th><th>dx</th><th>dln(y)</th>`
+              ? `<th>ln(y)</th><th>(x-x media)</th><th>(y'-y media)</th><th>dx²</th><th>dy²</th><th>dx·dy</th>`
               : ""
           }
           ${
             type === "logarithmic"
-              ? `<th>ln(x)</th><th>dln(x)</th><th>dy</th>`
+              ? `<th>ln(x)</th><th>(x'-x media)</th><th>(y-y media)</th><th>dx²</th><th>dy²</th><th>dx·dy</th>`
               : ""
           }
         </tr>
@@ -121,25 +121,30 @@ function renderTable(type) {
             let extra = "";
             if (type === "linear") {
               extra = `
-                <td>${m.arrayDX[i].toFixed(2)}</td>
-                <td>${m.arrayDY[i].toFixed(2)}</td>
-                <td>${m.arrayDXpow2[i].toFixed(2)}</td>
-                <td>${m.arrayDYpow2[i].toFixed(2)}</td>
-                <td>${m.arrayDXDY[i].toFixed(2)}</td>
+                <td>${m.arrayDX[i].toFixed(4)}</td>
+                <td>${m.arrayDY[i].toFixed(4)}</td>
+                <td>${m.arrayDXpow2[i].toFixed(4)}</td>
+                <td>${m.arrayDYpow2[i].toFixed(4)}</td>
+                <td>${m.arrayDXDY[i].toFixed(4)}</td>
               `;
             } else if (type === "exponential") {
               extra = `
-                <td>${m.arrayLogy[i].toFixed(2)}</td>
-                <td>${m.arrayDx[i].toFixed(2)}</td>
-                <td>${m.arrayDlogY[i].toFixed(2)}</td>
+                <td>${m.arrayLogy[i].toFixed(4)}</td>
+                <td>${m.arrayDx[i].toFixed(4)}</td>
+                <td>${m.arrayDlogY[i].toFixed(4)}</td>
+                <td>${m.arrayDxPow2[i].toFixed(4)}</td>
+                <td>${m.arrayDlogYpow2[i].toFixed(4)}</td>
+                <td>${m.arrayDxDlogY[i].toFixed(4)}</td>
               `;
             } else {
               extra = `
-                <td>${m.arrayLogx[i].toFixed(2)}</td>
-                <td>${m.arrayDlogX[i].toFixed(2)}</td>
-                <td>${m.arrayDy[i].toFixed(2)}</td>
-              `;
-            }
+                <td>${m.arrayLogx[i].toFixed(4)}</td>
+                <td>${m.arrayDlogX[i].toFixed(4)}</td>
+                <td>${m.arrayDy[i].toFixed(4)}</td>
+                <td>${m.arrayLogxPow2[i].toFixed(4)}</td>
+                <td>${m.arrayDyPow2[i].toFixed(4)}</td>
+                <td>${m.arrayDlogXy[i].toFixed(4)}</td>
+            `;}
             return `<tr>
               <td>${i + 1}</td>
               <td>${xi}</td>
