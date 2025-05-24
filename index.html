@@ -1,184 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analytics</title>
-    <link rel="icon" href="/img/logo.png" type="image/png" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  </head>
-  <body>
-
-  <nav class="navbar">
-    <div class="logo"><img src="img/logo.svg" alt="" width="50px"></div>
-      
-    <ul class="nav-links">
-        <li><a href="#intro">Inicio</a></li>
-        <li><a href="#stats">Informacion</a></li>
-        <li><a href="#">Preguntas</a></li>
-        <li><a href="#">Herramientas</a></li>
-        <li><a href="#Soporte">ayuda</a></li>
-        <li><a href="#">    </a></li>
-        <li><a href="#">    </a></li>
-      </ul>
-  </nav>
-  
-  <!-- Banner -->
-  <header class="banner">
-          <h1>Analytics</h1>
-  </header>
-
-  <section class="intro" id="intro">
-    <div class="intro-text">
-      <p>
-        AnaliTICs, Una plataforma especializada en análisis estadístico de datos. Nuestro programa te permite realizar cálculos avanzados, incluyendo distribuciones de probabilidad, combinaciones, medidas de tendencia central (media, mediana, moda) y más. Diseñado para estudiantes, investigadores y profesionales, ofrecemos herramientas intuitivas y precisas para simplificar el procesamiento y la interpretación de datos estadísticos. Optimiza tu análisis con nuestra solución eficiente y fácil de usar.
-      </p>
-    </div>
-
-  </section>
-
-  <section class="cards-box">
-    <h3 class="h3-text">Herramientas de analisis estdistico</h3>
-    <div class="stats" id="stats">
-      <div class="tarjeta">
-        <img src="img/conbinaciones.jpg" alt="Imagen de la tarjeta" class="imagen">
-        <div class="texto">
-            <h3>Combinaciones</h3>
-            <p>Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. Debitis optio quis praesentium.
-              Eos ab dolore impedit minima. Veniam, debitis vero.
-            </p>
-            <br>
-            <a href="#" class="boton">Ir a otra página</a>
+<head>
+    <title>CiberConnect</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <p class="logo"><img src="/img/logo.svg" alt="Logo" height="75px"></p>
         </div>
-      </div>
-      <div class="tarjeta">
-        <img src="img/graficas.jpg" alt="Imagen de la tarjeta" class="imagen">
-        <div class="texto">
-            <h3>Analisis Estadistico</h3>
-            <p>Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. Debitis optio quis praesentium.
-              Eos ab dolore impedit minima. Veniam, debitis vero.
-            </p>
-            <br>
-            <a href="analisisEstadistico.html" class="boton">Ir a otra página</a>
-        </div>
-      </div>
-      <div class="tarjeta">
-        <img src=" img/distribuciones.jpg" alt="Imagen de la tarjeta" class="imagen">
-        <div class="texto">
-            <h3>Distribuciones</h3>
-            <p>Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. Debitis optio quis praesentium.
-              Eos ab dolore impedit minima. Veniam, debitis vero.
-            </p>
-            <br>
-            <a href="#" class="boton">Ir a otra página</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  
+    </header>
 
+    <section id="hero">
+        <h1>Conéctate al Mundo <br>con Nosotros</h1>
+        <button onclick="irAPagina()">¡VISÍTANOS HOY!</button>
 
-  <section class="Soporte" id="Soporte">
-    <div class="form-content">
-      <h2>Ayuda / Soporte</h2>
-      <form action="https://formsubmit.co/huroncito777@gmail.com" method="POST">
-          
-          <label for="name">Nombre</label>
-          <input type="text" name="name" id="name">
-  
-          <label for="email">Correo electrónico</label>
-          <input type="email" name="email" id="email">
-  
-          <label for="subject">Asunto</label>
-          <input type="text" name="subject" id="subject">
-  
-          <label for="coments">Comentarios</label>
-          <textarea name="coments" id="coments" cols="30" rows="5"></textarea>
-  
-          <input class="btn" type="submit" value="Enviar">
-  
-          <input type="hidden" name="_next" value="http://127.0.0.1:5500 index.html#">
-          <input type="hidden" name="_captcha" value="false">
-          
-        </form>
-    </div>
-  </section>
+        <script>
+        function irAPagina() {
+            window.location.href = "menu.html";
+        }
+        </script>
+    </section>
 
-
-
-
-
-  <footer class="footer">
-    <br>
-    <div class="container">
-        <div class="footer-row">
-        
-            <div class="footer-links">
-                <h4>Informacion</h4>
-                <ul>
-                    <li><a href="#">Nosotros</a></li>
-                    <li><a href="#">Nuestros servicios</a></li>
-                    <li><a href="#">Caracteristicas</a></li>
-                    <li><a href="#">Política de privacidad</a></li>
-                </ul>
+    <section id="somos-proya">
+        <div class="container">
+            <div class="img-container"></div>
+            <div class="texto">
+                <h2>Somos <span class="color-acento">AnaliTIC's</span></h2>
+                <p>En <strong class="color-acento">AnaliTIC's</strong>, te ayudamos en tu experiencia en el mundo estadisticon con herramientas de analisis de datos, correlaciones, convinaciones y demas.</p>
             </div>
-
-            <div class="footer-links">
-                <h4>Contribuciones</h4>
-                <ul>
-                    <li>
-                      <div class="creditos">
-                      <span class="credito" data-nombre="Logica y Programador">Antony Ramiro</span></div>
-                    </li>
-                    <li>
-                      <div class="creditos">
-                      <span class="credito" data-nombre="Diseñador y Programador">Hugo Roberto</span></div>
-                    </li>
-                    <li>
-                      <div class="creditos">
-                      <span class="credito" data-nombre="Diseñadora">Melanie Mariana</span></div>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-                <h4>Omenaje</h4>
-                <ul>
-                    <li><a href="#">Primer Programa estadistico</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-              <h4>Síguenos</h4>
-              <div class="social-link">
-                  <a href="#" class="tooltip" data-tooltip="Canal Oficial">
-                      <i class="fa-brands fa-discord"></i>
-                  </a>
-                  <a href="#" class="tooltip" data-tooltip="Repositorio">
-                      <i class="fa-brands fa-github"></i>
-                  </a>
-                  <a href="#" class="tooltip" data-tooltip="Antony">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="#" class="tooltip" data-tooltip="Melanie">
-                  <i class="fa-brands fa-github"></i>
-              </a>
-                  <a href="#" class="tooltip" data-tooltip="Arata-K">
-                      <i class="fab fa-github"></i>
-                  </a>
-              </div>
-          </div>
-
         </div>
-    </div>
-     
-    
-  </footer>
-    <script src=" js/menu.js"></script>
-    <button class="btn-ayuda" onclick="window.open('ayuda.html', '_blank')">?</button>
-  </body>
+    </section>
+
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; AnaliTIC's 2025</p>
+        </div>
+    </footer>
+</body>
 </html>

@@ -1,4 +1,20 @@
-/* Reset básico */
+:root {
+  --color-texto: #e0e0e0;
+  --color-fondo: #1e1e1e;
+  --color-hover: #333;
+  --color-hover-par: #252525;
+  --color-borde: #444;
+  --color-verde: #008209;
+  --color-verde-oscuro: #00610bb4;
+  --color-verde-hover: #02a515b4;
+  --color-scroll-track: #3b383885;
+  --color-sombra: rgba(0, 0, 0, 0.3);
+  --bg-claro: #121212;
+  --texto-claro: #e0e0e0;
+  --bg-nav: #1e1e1e;
+}
+
+
 body, h1, h2, h3, p, ul, li, button {
   margin: 0;
   padding: 0;
@@ -29,33 +45,11 @@ body {
 
 
 .logo img {
-  height: 40px;
+  height: 70px;
   width: auto;
 }
 
-.nav-links {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 20;
-  max-width: 100%; 
-  overflow-x: auto;
-}
 
-.nav-links li {
-  margin-left: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #00d32e;
-}
 
 
 .banner {
@@ -168,7 +162,7 @@ body {
       rgba(23, 23, 23, 0.74) 30%,
       rgba(9, 160, 6, 0.7)
   ), 
-  url(".. img/fondo.jpg");
+  url("/img/front-end.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
