@@ -7,6 +7,12 @@ import {
   calcularFuturaYLogaritmica,
 } from "./correlacionBivariable.js";
 
+import {
+  graficarLineal,
+  graficarExponencial,
+  graficarLogaritmica,
+} from "./correlacionBivariableGrafica.js";
+
 // referenciar elementos
 const fileInput = document.getElementById("excelFile");
 const calcButton = document.getElementById("calculateButton");
@@ -61,11 +67,23 @@ selectReg.addEventListener("change", () => {
   renderTable(selectReg.value);
 });
 
+function renderGrafica(type, x, y) {
+  if (type === "linear") {
+    graficarLineal(x, y);
+  } else if (type === "exponential") {
+    graficarExponencial(x, y);
+  } else if (type === "logarithmic") {
+    graficarLogaritmica(x, y);
+  }
+}
+
 // 4) Renderizar la tabla de un modelo
 function renderTable(type) {
   const m = models[type];
   if (!m) return;
 
+  renderGrafica(type, m.x, m.y);
+  
   predictX.disabled = false;
   predictBtn.disabled = false;
 

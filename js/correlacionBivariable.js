@@ -17,11 +17,9 @@ function calcularR(SXY, SX, SY) {
 function calcularB(SXY, SX) {
   return (SXY / SX ** 2).toFixed(2);
 }
-
 function calcularA(promY, B, promX) {
   return (promY - B * promX).toFixed(2);
 }
-
 function calcularTotales(Data) {
   return Data.reduce((acumulador, valorActual) => {
     return acumulador + valorActual;
