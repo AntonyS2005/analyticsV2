@@ -79,6 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
       icon: "fas fa-table",
       text: "generar excel",
     },
+    {
+      href: "ayuda.html",
+      icon: "fa-question-circle",
+      text: "Ayuda",
+    },
   ];
 
   const menuItems = [
